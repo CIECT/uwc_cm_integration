@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+    
+	<bean id="coza.opencollab.sakai.user.AddUserAsAdminLoginAdvisor"
+          class="coza.opencollab.sakai.user.AddUserAsAdminLoginAdvisor" init-method="init" lazy-init="false">
+        <property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
+        <property name="userService" ref="org.sakaiproject.user.api.UserDirectoryService" />
+        <property name="type" value="support" />
+        <property name="provided" value="true" />
+    </bean>
+
+	<!-- An Site Advisor for the missing provider id -->
+	<bean id="coza.opencollab.sakai.cm.advisor.MissedProviderSiteAdvisor"
+		class="coza.opencollab.sakai.cm.advisor.MissedProviderSiteAdvisor"
+		init-method="init" lazy-init="false">
+		<property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
+	</bean>
+
+	<!-- Full Course Management Population Job -->
+	<!-- bean id="coza.opencollab.sakai.cm.jobs.FullPopulationJob" class="coza.opencollab.sakai.cm.jobs.FullPopulationJob">
+		<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
+		<property name="courseManagementAdmin"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
+		<property name="courseManagementService"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+		<property name="client"
+			ref="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" />
+	</bean -->
+
+	<!-- bean id="coza.opencollab.sakai.cm.test.TestClient" class="coza.opencollab.sakai.cm.test.TestClient">
+		<property name="fileDirectory"
+			value="C:\Development\Projects\Sakai\src\CM\sampleFiles\SimpleSections" />
+	</bean -->
+
+	<!-- bean id="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient"
+		class="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" init-method="init">
+		<property name="serverConfigurationService"
+			ref="org.sakaiproject.component.api.ServerConfigurationService" />
+	</bean>
+
+	<bean
+		id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.coza.opencollab.sakai.cm.jobs.FullPopulationJob"
+		class="org.sakaiproject.component.app.scheduler.jobs.SpringJobBeanWrapper"
+		init-method="init">
+
+		<property name="beanId" value="coza.opencollab.sakai.cm.jobs.FullPopulationJob" />
+		<property name="jobName" value="UWC Course Management Full Population Job" />
+		<property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager" />
+	</bean -->
+
+	<!-- Delta Course Management Job -->
+	<!-- bean 	
+		id="coza.opencollab.sakai.cm.jobs.EnrollmentUpdateJob" 
+		class="coza.opencollab.sakai.cm.jobs.EnrollmentUpdateJob">
+		<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
+		<property name="courseManagementAdmin"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
+		<property name="courseManagementService"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+		<property name="client"
+			ref="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" />
+	</bean>
+	<bean
+		id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.coza.opencollab.sakai.cm.jobs.EnrollmentUpdateJob"
+		class="org.sakaiproject.component.app.scheduler.jobs.SpringJobBeanWrapper"
+		init-method="init">
+
+		<property name="beanId" value="coza.opencollab.sakai.cm.jobs.EnrollmentUpdateJob" />
+		<property name="jobName" value="UWC Course Management Enrollment Update Job" />
+		<property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager" />
+	</bean -->
+	
+	<!-- Full Population Fix Job -->
+	<!--  <bean id="coza.opencollab.sakai.cm.jobs.FullPopulationFixJob"
+		class="coza.opencollab.sakai.cm.jobs.FullPopulationFixJob">
+		<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
+		<property name="courseManagementAdmin"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
+		<property name="courseManagementService"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+	</bean>
+
+	<bean
+		id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.coza.opencollab.sakai.cm.jobs.FullPopulationFixJob"
+		class="org.sakaiproject.component.app.scheduler.jobs.SpringJobBeanWrapper"
+		singleton="true" init-method="init">
+
+		<property name="beanId" value="coza.opencollab.sakai.cm.jobs.FullPopulationFixJob" />
+		<property name="jobName" value="UWC Course Management Data Population Fix Job" />
+		<property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager" />
+	</bean> -->
+	
+	
+	<!-- UWC Academia Course Population Job -->
+	<bean id="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob" class="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob">
+		<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
+		<property name="courseManagementAdmin"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
+		<property name="courseManagementService"
+			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+	</bean>
+	
+	<!-- bean id="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient"
+		class="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient" init-method="init">
+		<property name="serverConfigurationService"
+			ref="org.sakaiproject.component.api.ServerConfigurationService" />
+	</bean -->
+	
+	<bean
+		id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob"
+		class="org.sakaiproject.component.app.scheduler.jobs.SpringJobBeanWrapper" init-method="init">
+		<property name="beanId" value="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob" />
+		<property name="jobName" value="UWC Academia Course Population Job" />
+		<property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager" />
+	</bean>
+	
+</beans>

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.uwc-academia.ac.za/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.uwc-academia.ac.za/" targetNamespace="http://www.uwc-academia.ac.za/">
+  <wsdl:types>
+    <s:schema xmlns:s="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.uwc-academia.ac.za/">
+
+	<s:complexType name="General_ListItems">
+		<s:sequence>
+			<s:element maxOccurs="unbounded" minOccurs="0" name="row" type="tns:General_ListColumns"/>
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="General_ListColumns">
+		<s:sequence>
+			<s:element maxOccurs="unbounded" minOccurs="0" name="column" type="s:string"/>
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="General_StatusMessages">
+		<s:sequence>
+			<s:element maxOccurs="unbounded" minOccurs="0" name="StatusMessage" type="s:string"/>
+		</s:sequence>
+	</s:complexType>
+
+	<s:element name="Download_Students">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_StudentsRequest" type="tns:Download_Students_Input"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Download_Students_Input">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Year" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="IntakeCode" type="s:string"/>
+			<s:element maxOccurs="1" minOccurs="0" name="ModuleCode" type="s:string"/>
+			<s:element maxOccurs="1" minOccurs="0" name="PeriodCode" type="s:string"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Download_StudentsResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_StudentsResult" type="tns:Download_Students_Output"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Download_Students_Output">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Status" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="Module_code" type="s:string"/>
+			<s:element maxOccurs="1" minOccurs="0" name="Student" type="s:string"/>
+			<s:element maxOccurs="1" minOccurs="0" name="Student_List" type="tns:General_ListItems"/>
+			<s:element maxOccurs="1" minOccurs="0" name="Year" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="Message" type="s:string"/>
+			<s:element maxOccurs="1" minOccurs="0" name="StatusMessages" type="tns:General_StatusMessages"/>
+		</s:sequence>
+	</s:complexType>
+	
+	<s:element name="Download_Intakes">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_IntakeRequest" type="tns:Download_Intakes_Input"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Download_Intakes_Input">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Year" type="s:integer"/>
+		</s:sequence>
+	</s:complexType>
+
+	<s:element name="Download_IntakeResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_IntakeResult" type="tns:DownloadIntakeOutput"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="DownloadIntakeOutput">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Status" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="Year" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="Intake_List" type="tns:General_ListItems"/>
+			<s:element maxOccurs="1" minOccurs="0" name="StatusMessages" type="tns:General_StatusMessages"/>
+		</s:sequence>
+	</s:complexType>
+	
+	<s:element name="Download_Programs">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_ProgramsRequest" type="tns:Download_Programs_Input"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Download_Programs_Input">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Year" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="IntakeCode" type="s:integer"/>
+		</s:sequence>
+	</s:complexType>
+
+	<s:element name="Download_ProgramsResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_ProgramsResult" type="tns:DownloadProgramsOutput"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="DownloadProgramsOutput">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Status" type="s:integer"/>
+			<!-- <s:element minOccurs="0" maxOccurs="1" name="Year"
+				type="s:integer" /> -->
+			<s:element maxOccurs="1" minOccurs="0" name="Program_List" type="tns:General_ListItems"/>
+			<s:element maxOccurs="1" minOccurs="0" name="StatusMessages" type="tns:General_StatusMessages"/>
+		</s:sequence>
+	</s:complexType>
+	
+	<s:element name="Download_Module_Periods">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_Module_PeriodsRequest" type="tns:Download_Module_Periods_Input"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Download_Module_Periods_Input">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Year" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="IntakeCode" type="s:integer"/>
+		</s:sequence>
+	</s:complexType>
+
+	<s:element name="Download_Module_PeriodsResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_Module_PeriodsResult" type="tns:DownloadModulePeriodsOutput"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="DownloadModulePeriodsOutput">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Status" type="s:integer"/>
+			<!-- <s:element minOccurs="0" maxOccurs="1" name="Year"
+				type="s:integer" /> -->
+			<s:element maxOccurs="1" minOccurs="0" name="Module_Period_List" type="tns:General_ListItems"/>
+			<s:element maxOccurs="1" minOccurs="0" name="StatusMessages" type="tns:General_StatusMessages"/>
+		</s:sequence>
+	</s:complexType>
+	
+	<s:element name="Download_Lecturers">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_LecturersRequest" type="tns:Download_Lecturers_Input"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Download_Lecturers_Input">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Year" type="s:integer"/>
+			<s:element maxOccurs="1" minOccurs="0" name="ModuleCode" type="s:string"/>
+			<s:element maxOccurs="1" minOccurs="0" name="IntakeCode" type="s:integer"/>
+		</s:sequence>
+	</s:complexType>
+
+	<s:element name="Download_LecturersResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element maxOccurs="1" minOccurs="0" name="Download_LecturersResult" type="tns:Download_LecturersOutput"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="Download_LecturersOutput">
+		<s:sequence>
+			<s:element maxOccurs="1" minOccurs="0" name="Status" type="s:integer"/>
+			<!-- <s:element minOccurs="0" maxOccurs="1" name="Year"
+				type="s:integer" /> -->
+			<s:element maxOccurs="1" minOccurs="0" name="Lecturers_List" type="tns:General_ListItems"/>
+			<s:element maxOccurs="1" minOccurs="0" name="StatusMessages" type="tns:General_StatusMessages"/>
+		</s:sequence>
+	</s:complexType>
+
+</s:schema>
+  </wsdl:types>
+ 
+ 
+   <wsdl:message name="Download_StudentsSoapIn">
+    <wsdl:part element="tns:Download_Students" name="parameters"/>
+   </wsdl:message>
+   
+   <wsdl:message name="Download_IntakesSoapIn">
+    <wsdl:part element="tns:Download_Intakes" name="parameters"/>
+   </wsdl:message>
+   
+   <wsdl:message name="Download_ProgramsSoapIn">
+    <wsdl:part element="tns:Download_Programs" name="parameters"/>
+   </wsdl:message>
+   
+   <wsdl:message name="Download_Module_PeriodsSoapIn">
+    <wsdl:part element="tns:Download_Module_Periods" name="parameters"/>
+   </wsdl:message>
+   
+   <wsdl:message name="Download_LecturersSoapIn">
+    <wsdl:part element="tns:Download_Lecturers" name="parameters"/>
+   </wsdl:message>
+  
+  
+  <wsdl:message name="Download_StudentsResponse">
+    <wsdl:part element="tns:Download_StudentsResponse" name="Download_StudentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Download_IntakeResponse">
+    <wsdl:part element="tns:Download_IntakeResponse" name="Download_IntakeResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Download_ProgramsResponse">
+    <wsdl:part element="tns:Download_ProgramsResponse" name="Download_ProgramsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Download_Module_PeriodsResponse">
+    <wsdl:part element="tns:Download_Module_PeriodsResponse" name="Download_Module_PeriodsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Download_LecturersResponse">
+    <wsdl:part element="tns:Download_LecturersResponse" name="Download_LecturersResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RequestPort">
+    <wsdl:operation name="Download_Students">
+	  <wsdl:input message="tns:Download_StudentsSoapIn"/>
+      <wsdl:output message="tns:Download_StudentsResponse" name="Download_StudentsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Intakes">
+	  <wsdl:input message="tns:Download_IntakesSoapIn"/>
+      <wsdl:output message="tns:Download_IntakeResponse" name="Download_IntakeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Programs">
+	  <wsdl:input message="tns:Download_ProgramsSoapIn"/>
+      <wsdl:output message="tns:Download_ProgramsResponse" name="Download_ProgramsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Module_Periods">
+	  <wsdl:input message="tns:Download_Module_PeriodsSoapIn"/>
+      <wsdl:output message="tns:Download_Module_PeriodsResponse" name="Download_Module_PeriodsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Lecturers">
+	  <wsdl:input message="tns:Download_LecturersSoapIn"/>
+      <wsdl:output message="tns:Download_LecturersResponse" name="Download_LecturersResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RequestPortSoap11" type="tns:RequestPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Download_Students">
+      <soap:operation soapAction=""/>
+	  <wsdl:input message="tns:Download_StudentsSoapIn">
+	  <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Download_StudentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Intakes">
+      <soap:operation soapAction=""/>
+	  <wsdl:input message="tns:Download_IntakesSoapIn">
+	  <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Download_IntakeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Programs">
+      <soap:operation soapAction=""/>
+	  <wsdl:input message="tns:Download_ProgramsSoapIn">
+	  <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Download_ProgramsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Module_Periods">
+      <soap:operation soapAction=""/>
+	  <wsdl:input message="tns:Download_Module_PeriodsSoapIn">
+	  <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Download_Module_PeriodsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Lecturers">
+      <soap:operation soapAction=""/>
+	  <wsdl:input message="tns:Download_LecturersSoapIn">
+	  <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Download_LecturersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RequestPortService">
+    <wsdl:port binding="tns:RequestPortSoap11" name="RequestPortSoap11">
+      <soap:address location="http://uwc-demo.southafricanorth.cloudapp.azure.com:8091/academia-ws/*"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.uwc.ac.za/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.uwc.ac.za/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">applctns system sakai web services.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.uwc.ac.za/">
+      <s:element name="Download_Faculty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_FacultyRequest" type="tns:Download_Faculty_Input" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Faculty_Input">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Faculty" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_FacultyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_FacultyResult" type="tns:Download_Faculty_Output" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Faculty_Output">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Faculty" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Faculty_List" type="tns:General_ListItems" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusMessages" type="tns:General_StatusMessages" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="General_ListItems">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="row" type="tns:General_ListColumns" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="General_ListColumns">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="column" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="General_StatusMessages">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="StatusMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_Department">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_DepartmentRequest" type="tns:Download_Department_Input" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Department_Input">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Department" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Faculty" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_DepartmentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_DepartmentResult" type="tns:Download_Department_Output" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Department_Output">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department_List" type="tns:General_ListItems" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Faculty" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusMessages" type="tns:General_StatusMessages" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_CalendarGroup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_CalendarGroupRequest" type="tns:Download_CalendarGroup_Input" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_CalendarGroup_Input">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Calendar_Group" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_CalendarGroupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_CalendarGroupResult" type="tns:Download_CalendarGroup_Output" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_CalendarGroup_Output">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Calendar_Group" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Calendar_Group_List" type="tns:General_ListItems" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusMessages" type="tns:General_StatusMessages" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_Students">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_StudentsRequest" type="tns:Download_Students_Input" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Students_Input">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Module_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Student" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_StudentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_StudentsResult" type="tns:Download_Students_Output" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Students_Output">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Student" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Student_List" type="tns:General_ListItems" />
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusMessages" type="tns:General_StatusMessages" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_CourseChanges">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_CourseChangesRequest" type="tns:Download_CourseChanges_Input" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_CourseChanges_Input">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Course_Changes" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_CourseChangesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_CourseChangesResult" type="tns:Download_CourseChanges_Output" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_CourseChanges_Output">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Course_Changes" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Course_Changes_List" type="tns:General_ListItems" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusMessages" type="tns:General_StatusMessages" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_Modules">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_ModulesRequest" type="tns:Download_Modules_Input" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Modules_Input">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Download_ModulesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Download_ModulesResult" type="tns:Download_Modules_Output" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Download_Modules_Output">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:integer" />
+          <s:element minOccurs="0" maxOccurs="1" name="Department_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module_code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Module_List" type="tns:General_ListItems" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusMessages" type="tns:General_StatusMessages" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="Download_FacultySoapIn">
+    <wsdl:part name="parameters" element="tns:Download_Faculty" />
+  </wsdl:message>
+  <wsdl:message name="Download_FacultySoapOut">
+    <wsdl:part name="parameters" element="tns:Download_FacultyResponse" />
+  </wsdl:message>
+  <wsdl:message name="Download_DepartmentSoapIn">
+    <wsdl:part name="parameters" element="tns:Download_Department" />
+  </wsdl:message>
+  <wsdl:message name="Download_DepartmentSoapOut">
+    <wsdl:part name="parameters" element="tns:Download_DepartmentResponse" />
+  </wsdl:message>
+  <wsdl:message name="Download_CalendarGroupSoapIn">
+    <wsdl:part name="parameters" element="tns:Download_CalendarGroup" />
+  </wsdl:message>
+  <wsdl:message name="Download_CalendarGroupSoapOut">
+    <wsdl:part name="parameters" element="tns:Download_CalendarGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="Download_StudentsSoapIn">
+    <wsdl:part name="parameters" element="tns:Download_Students" />
+  </wsdl:message>
+  <wsdl:message name="Download_StudentsSoapOut">
+    <wsdl:part name="parameters" element="tns:Download_StudentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="Download_CourseChangesSoapIn">
+    <wsdl:part name="parameters" element="tns:Download_CourseChanges" />
+  </wsdl:message>
+  <wsdl:message name="Download_CourseChangesSoapOut">
+    <wsdl:part name="parameters" element="tns:Download_CourseChangesResponse" />
+  </wsdl:message>
+  <wsdl:message name="Download_ModulesSoapIn">
+    <wsdl:part name="parameters" element="tns:Download_Modules" />
+  </wsdl:message>
+  <wsdl:message name="Download_ModulesSoapOut">
+    <wsdl:part name="parameters" element="tns:Download_ModulesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="sakaiSoap">
+    <wsdl:operation name="Download_Faculty">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service method for Download_Faculty.&lt;inputParameters&gt;&lt;inputParameter name='Faculty' length='1' hostDataType='alpha' /&gt;&lt;/inputParameters&gt;</wsdl:documentation>
+      <wsdl:input message="tns:Download_FacultySoapIn" />
+      <wsdl:output message="tns:Download_FacultySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Download_Department">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service method for Download_Department.&lt;inputParameters&gt;&lt;inputParameter name='Department' length='1' hostDataType='alpha' /&gt;&lt;inputParameter name='Department_code' length='6' hostDataType='alpha' /&gt;&lt;inputParameter name='Faculty' length='3' hostDataType='alpha' /&gt;&lt;/inputParameters&gt;</wsdl:documentation>
+      <wsdl:input message="tns:Download_DepartmentSoapIn" />
+      <wsdl:output message="tns:Download_DepartmentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Download_CalendarGroup">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service method for Download_CalendarGroup.&lt;inputParameters&gt;&lt;inputParameter name='Year' length='4' hostDataType='number' /&gt;&lt;inputParameter name='Calendar_Group' length='1' hostDataType='alpha' /&gt;&lt;/inputParameters&gt;</wsdl:documentation>
+      <wsdl:input message="tns:Download_CalendarGroupSoapIn" />
+      <wsdl:output message="tns:Download_CalendarGroupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Download_Students">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service method for Download_Students.&lt;inputParameters&gt;&lt;inputParameter name='Module_code' length='9' hostDataType='alpha' /&gt;&lt;inputParameter name='Student' length='1' hostDataType='alpha' /&gt;&lt;inputParameter name='Year' length='4' hostDataType='number' /&gt;&lt;/inputParameters&gt;</wsdl:documentation>
+      <wsdl:input message="tns:Download_StudentsSoapIn" />
+      <wsdl:output message="tns:Download_StudentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Download_CourseChanges">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service method for Download_CourseChanges.&lt;inputParameters&gt;&lt;inputParameter name='Year' length='4' hostDataType='number' /&gt;&lt;inputParameter name='Course_Changes' length='1' hostDataType='alpha' /&gt;&lt;/inputParameters&gt;</wsdl:documentation>
+      <wsdl:input message="tns:Download_CourseChangesSoapIn" />
+      <wsdl:output message="tns:Download_CourseChangesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Download_Modules">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service method for Download_Modules.&lt;inputParameters&gt;&lt;inputParameter name='Year' length='4' hostDataType='number' /&gt;&lt;inputParameter name='Department_code' length='6' hostDataType='alpha' /&gt;&lt;inputParameter name='Module_code' length='9' hostDataType='alpha' /&gt;&lt;inputParameter name='Module' length='1' hostDataType='alpha' /&gt;&lt;/inputParameters&gt;</wsdl:documentation>
+      <wsdl:input message="tns:Download_ModulesSoapIn" />
+      <wsdl:output message="tns:Download_ModulesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="sakaiSoap" type="tns:sakaiSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Download_Faculty">
+      <soap:operation soapAction="http://www.uwc.ac.za/Download_Faculty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Department">
+      <soap:operation soapAction="http://www.uwc.ac.za/Download_Department" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_CalendarGroup">
+      <soap:operation soapAction="http://www.uwc.ac.za/Download_CalendarGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Students">
+      <soap:operation soapAction="http://www.uwc.ac.za/Download_Students" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_CourseChanges">
+      <soap:operation soapAction="http://www.uwc.ac.za/Download_CourseChanges" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Modules">
+      <soap:operation soapAction="http://www.uwc.ac.za/Download_Modules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="sakaiSoap12" type="tns:sakaiSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Download_Faculty">
+      <soap12:operation soapAction="http://www.uwc.ac.za/Download_Faculty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Department">
+      <soap12:operation soapAction="http://www.uwc.ac.za/Download_Department" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_CalendarGroup">
+      <soap12:operation soapAction="http://www.uwc.ac.za/Download_CalendarGroup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Students">
+      <soap12:operation soapAction="http://www.uwc.ac.za/Download_Students" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_CourseChanges">
+      <soap12:operation soapAction="http://www.uwc.ac.za/Download_CourseChanges" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download_Modules">
+      <soap12:operation soapAction="http://www.uwc.ac.za/Download_Modules" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="sakai">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">applctns system sakai web services.</wsdl:documentation>
+    <wsdl:port name="sakaiSoap" binding="tns:sakaiSoap">
+      <soap:address location="http://196.11.235.202/applctns_sakai_WS/sakai.asmx" />
+    </wsdl:port>
+    <wsdl:port name="sakaiSoap12" binding="tns:sakaiSoap12">
+      <soap12:address location="http://196.11.235.202/applctns_sakai_WS/sakai.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

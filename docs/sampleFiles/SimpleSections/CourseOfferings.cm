@@ -1,0 +1,2 @@
+Code,id,title,description,status,academicSessionId,canonicalCourseId,startDate,endDate,courseSetIds
+CO1,CO1,CourseOff1,Course Offering 1,Active,AS1,CC1,20120101,20122131,CS1

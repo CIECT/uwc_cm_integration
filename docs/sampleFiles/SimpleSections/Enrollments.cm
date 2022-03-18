@@ -1,0 +1,2 @@
+Code,studentId,enrollmentSetId,status,credits,gradingScheme
+E1,teststu,ES1,enrolled,0,standard

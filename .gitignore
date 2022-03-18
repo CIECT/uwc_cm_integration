@@ -1,0 +1,12 @@
+.idea
+.project
+.classpath
+.settings
+*.iml
+*.swp
+*.orig
+*.rej
+target
+.directory
+.metadata
+.springBeans

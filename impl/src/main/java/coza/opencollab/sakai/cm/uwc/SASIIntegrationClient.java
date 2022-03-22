@@ -44,6 +44,7 @@ import za.ac.uwc_academia.www.RequestPortProxy;
 public class SASIIntegrationClient implements SISClient {
 	public static final String CONFIG_YEAR = "uwc.coursemanagement.year";
 	public static final String CONFIG_MODULE_LIMIT = "uwc.coursemanagement.module.limit";
+	public static final String SASI_WEBSERVICE_URL = "uwc.cm.sasi.webservice.url";
 	private ServerConfigurationService serverConfigurationService;
 	private SakaiSoapProxy proxy;
 	// all the current values
@@ -68,7 +69,7 @@ public class SASIIntegrationClient implements SISClient {
 			limitModules = true;
 		}
 
-		setSakaiSoapProxy(new SakaiSoapProxy("http://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx"));
+		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, "http://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx")));
 	}
 
 	@Override
@@ -519,13 +520,13 @@ public class SASIIntegrationClient implements SISClient {
 		return null;
 	}
 
-	@Override
-	public void destroy() {
-
-		academicSessions.clear();
-		academicSessions2.clear();
-		modules.clear();
-		modules2.clear();
-		enrolledStudents.clear();	
-	}
+//	@Override
+//	public void destroy() {
+//
+//		academicSessions.clear();
+//		academicSessions2.clear();
+//		modules.clear();
+//		modules2.clear();
+//		enrolledStudents.clear();	
+//	}
 }

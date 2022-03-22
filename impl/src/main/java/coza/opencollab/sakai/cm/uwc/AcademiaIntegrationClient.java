@@ -13,6 +13,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.sakaiproject.component.api.ServerConfigurationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import coza.opencollab.sakai.cm.SISAcademicSession;
 import coza.opencollab.sakai.cm.SISCanonicalCourse;
@@ -47,7 +49,9 @@ import za.ac.uwc_academia.www.RequestPortProxy;
 public class AcademiaIntegrationClient implements SISClient {
 
 	public static final String ACADEMIA_CONFIG_YEAR = "uwc.cm.academia.year";
-	private ServerConfigurationService serverConfigurationService;
+	public static final String ACADEMIA_WEBSERVICE_URL = "uwc.cm.academia.webservice.url";
+	
+	@Autowired private ServerConfigurationService serverConfigurationService;
 	private RequestPortProxy proxy;
 
 	private Map<String, SISAcademicSession> academicSessions = new HashMap<String, SISAcademicSession>();
@@ -57,8 +61,9 @@ public class AcademiaIntegrationClient implements SISClient {
 		this.proxy = proxy;
 	}
 
-	public void init() {		
-		setRequestPortProxy(new RequestPortProxy("http://uwc-demo.southafricanorth.cloudapp.azure.com:8091/academia-ws/RequestDefinition.wsdl"));
+	public void init() {
+		setRequestPortProxy(new RequestPortProxy(serverConfigurationService.getString(ACADEMIA_WEBSERVICE_URL, 
+				"http://uwc-demo.southafricanorth.cloudapp.azure.com:8091/academia-ws/RequestDefinition.wsdl")));
 	}
 
 	@Override
@@ -407,9 +412,9 @@ public class AcademiaIntegrationClient implements SISClient {
 		return memberships;
 	}
 
-	@Override
-	public void destroy() {
-		academicSessions.clear();
-		modules.clear();
-	}
+//	@Override
+//	public void destroy() {
+//		academicSessions.clear();
+//		modules.clear();
+//	}
 }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-	    http://www.springframework.org/schema/tx 
-        http://www.springframework.org/schema/tx/spring-tx.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+        
+    <context:component-scan base-package="coza.opencollab.sakai.cm" />
     
 	<bean id="coza.opencollab.sakai.user.AddUserAsAdminLoginAdvisor"
           class="coza.opencollab.sakai.user.AddUserAsAdminLoginAdvisor" init-method="init" lazy-init="false">
@@ -110,11 +111,11 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
 	</bean>
 	
-	<!-- bean id="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient"
+	<bean id="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient"
 		class="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient" init-method="init">
 		<property name="serverConfigurationService"
 			ref="org.sakaiproject.component.api.ServerConfigurationService" />
-	</bean -->
+	</bean>
 	
 	<bean
 		id="org.sakaiproject.api.app.scheduler.JobBeanWrapper.coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob"

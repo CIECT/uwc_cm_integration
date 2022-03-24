@@ -13,8 +13,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.sakaiproject.component.api.ServerConfigurationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import coza.opencollab.sakai.cm.SISAcademicSession;
 import coza.opencollab.sakai.cm.SISCanonicalCourse;
@@ -28,7 +26,6 @@ import coza.opencollab.sakai.cm.SISException;
 import coza.opencollab.sakai.cm.SISMembership;
 import coza.opencollab.sakai.cm.SISSection;
 import coza.opencollab.sakai.cm.Utils;
-import za.ac.uwc.www.SakaiSoapProxy;
 import za.ac.uwc_academia.www.DownloadIntakeOutput;
 import za.ac.uwc_academia.www.DownloadModulePeriodsOutput;
 import za.ac.uwc_academia.www.DownloadProgramsOutput;
@@ -51,7 +48,7 @@ public class AcademiaIntegrationClient implements SISClient {
 	public static final String ACADEMIA_CONFIG_YEAR = "uwc.cm.academia.year";
 	public static final String ACADEMIA_WEBSERVICE_URL = "uwc.cm.academia.webservice.url";
 	
-	@Autowired private ServerConfigurationService serverConfigurationService;
+	private ServerConfigurationService serverConfigurationService;
 	private RequestPortProxy proxy;
 
 	private Map<String, SISAcademicSession> academicSessions = new HashMap<String, SISAcademicSession>();
@@ -61,6 +58,7 @@ public class AcademiaIntegrationClient implements SISClient {
 		this.proxy = proxy;
 	}
 
+	@Override
 	public void init() {
 		setRequestPortProxy(new RequestPortProxy(serverConfigurationService.getString(ACADEMIA_WEBSERVICE_URL, 
 				"http://uwc-demo.southafricanorth.cloudapp.azure.com:8091/academia-ws/RequestDefinition.wsdl")));
@@ -106,12 +104,16 @@ public class AcademiaIntegrationClient implements SISClient {
 			intakeOutput = proxy.getRequestPort().download_Intakes(intakesInput);
 			String[][] intakeArray = intakeOutput.getIntake_List();
 			for (int i = 0; i < intakeArray.length; i++) {
-				academicSession = new SISAcademicSession(intakeArray[i][1], intakeArray[i][1] + " " + intakeArray[i][0],
-						intakeArray[i][2] + " " + intakeArray[i][0], intakeArray[i][0],
-						Utils.getDateFromString(intakeArray[i][3]), Utils.getDateFromString(intakeArray[i][4]),
+				academicSession = new SISAcademicSession(
+						intakeArray[i][1] + " " + intakeArray[i][0],
+						intakeArray[i][1], 
+						intakeArray[i][2] + " " + intakeArray[i][0], 
+						intakeArray[i][0],
+						Utils.getDateFromString(intakeArray[i][3]), 
+						Utils.getDateFromString(intakeArray[i][4]),
 						"Academic Session for " + intakeArray[i][0] + " " + intakeArray[i][2]);
 
-				academicSessions.put(academicSession.getSISCode(), academicSession);
+				academicSessions.put(academicSession.getId(), academicSession);
 			}
 		} catch (RemoteException e) {
 			throw new SISException(e);
@@ -163,6 +165,7 @@ public class AcademiaIntegrationClient implements SISClient {
 		modulePerdiodsInput.setIntakeCode(new BigInteger(academicSession.getId()));
 
 		AcademiaModule module = getModule(canonicalCourse.getId());
+		if(module == null) return null;
 
 		try {
 			modulePerdiodsOutput = proxy.getRequestPort().download_Module_Periods(modulePerdiodsInput);
@@ -197,7 +200,8 @@ public class AcademiaIntegrationClient implements SISClient {
 	@Override
 	public Collection<SISMembership> getCourseOfferingMemberships(SISCourseOffering courseOffering) {
 		List<SISMembership> memberships = new ArrayList<SISMembership>();
-		AcademiaModule module = getModule(courseOffering.getId());
+		AcademiaModule module = getModule(courseOffering.getCanonicalCourseId());
+		if(module == null) return null;
 		for (String studentId : getEnrolledStudents(module)) {
 			SISMembership membership = new SISMembership(studentId);
 			membership.setUserId(studentId);
@@ -211,12 +215,13 @@ public class AcademiaIntegrationClient implements SISClient {
 	@Override
 	public Collection<SISEnrollmentSet> getEnrollmentSets(SISCourseOffering courseOffering) {
 		AcademiaModule module = getModule(courseOffering.getSISCode());
+		if(module == null) return null;
 		List<SISEnrollmentSet> enrollmentSets = new ArrayList<SISEnrollmentSet>();
 		SISEnrollmentSet enrollmentSet = new SISEnrollmentSet(module.getEnrollmentSetReference());
 		enrollmentSet.setId(module.getEnrollmentSetReference());
 		enrollmentSet.setTitle(module.getEnrollmentSetReference());
 		enrollmentSet.setDescription(module.getEnrollmentSetReference());
-		enrollmentSet.setCategory(module.getModulePeriodCodeDescr());
+		enrollmentSet.setCategory(courseOffering.getModulePeriodCodeDescr());
 		enrollmentSet.setDefaultEnrollmentCredits("0");
 		enrollmentSet.setCourseOfferingEid(courseOffering.getId());
 		List<String> lecturers = getLecturers(module);
@@ -228,11 +233,12 @@ public class AcademiaIntegrationClient implements SISClient {
 	@Override
 	public SISEnrollmentSet getEnrollmentSet(SISCourseOffering courseOffering) {
 		AcademiaModule module = getModule(courseOffering.getSISCode());
+		if(module == null) return null;
 		SISEnrollmentSet enrollmentSet = new SISEnrollmentSet(module.getEnrollmentSetReference());
 		enrollmentSet.setId(module.getEnrollmentSetReference());
 		enrollmentSet.setTitle(module.getEnrollmentSetReference());
 		enrollmentSet.setDescription(module.getEnrollmentSetReference());
-		enrollmentSet.setCategory(module.getModulePeriodCodeDescr());
+		enrollmentSet.setCategory(courseOffering.getModulePeriodCodeDescr());
 		enrollmentSet.setDefaultEnrollmentCredits("0");
 		enrollmentSet.setCourseOfferingEid(courseOffering.getId());
 		List<String> lecturers = getLecturers(module);
@@ -244,6 +250,7 @@ public class AcademiaIntegrationClient implements SISClient {
 	public Collection<SISEnrollment> getEnrollments(SISEnrollmentSet enrollmentSet) {
 		List<SISEnrollment> enrollments = new ArrayList<SISEnrollment>();
 		AcademiaModule module = getModule(enrollmentSet.getCourseOfferingEid());
+		if(module == null) return null;
 		for (String studentId : getEnrolledStudents(module)) {
 			SISEnrollment enrollment = new SISEnrollment(studentId);
 			enrollment.setStudentId(studentId);
@@ -273,13 +280,14 @@ public class AcademiaIntegrationClient implements SISClient {
 
 	@Override
 	public Collection<SISSection> getSections(SISCourseOffering courseOffering) {
-		AcademiaModule module = getModule(courseOffering.getId());
+		AcademiaModule module = getModule(courseOffering.getCanonicalCourseId());
+		if(module == null) return null;
 		SISSection section = new SISSection(module.getCourseOfferingReference());
 		section.setId(module.getCourseOfferingReference());
 		section.setTitle(module.getCourseOfferingReference());
-		section.setDescription(module.getCourseOfferingReference() + module.getModulePeriodCodeDescr());
+		section.setDescription(module.getCourseOfferingReference() + courseOffering.getModulePeriodCodeDescr());
 		section.setCategoryCode(module.getModulePeriodCode());
-		section.setCategoryDescription(module.getModulePeriodCodeDescr());
+		section.setCategoryDescription(courseOffering.getModulePeriodCodeDescr());
 		section.setParentSectionId(null);
 		section.setCourseOfferingId(courseOffering.getId());
 		section.setEnrollmentSetId(module.getEnrollmentSetReference());
@@ -290,13 +298,14 @@ public class AcademiaIntegrationClient implements SISClient {
 
 	@Override
 	public SISSection getSection(SISCourseOffering courseOffering) {
-		AcademiaModule module = getModule(courseOffering.getId());
+		AcademiaModule module = getModule(courseOffering.getCanonicalCourseId());
+		if(module == null) return null;
 		SISSection section = new SISSection(module.getCourseOfferingReference());
 		section.setId(module.getCourseOfferingReference());
 		section.setTitle(module.getCourseOfferingReference());
-		section.setDescription(module.getCourseOfferingReference() + module.getModulePeriodCodeDescr());
+		section.setDescription(module.getCourseOfferingReference() + courseOffering.getModulePeriodCodeDescr());
 		section.setCategoryCode(module.getModulePeriodCode());
-		section.setCategoryDescription(module.getModulePeriodCodeDescr());
+		section.setCategoryDescription(courseOffering.getModulePeriodCodeDescr());
 		section.setParentSectionId(null);
 		section.setCourseOfferingId(courseOffering.getId());
 		section.setEnrollmentSetId(module.getEnrollmentSetReference());
@@ -307,6 +316,7 @@ public class AcademiaIntegrationClient implements SISClient {
 	public Collection<SISMembership> getSectionMemberships(SISSection section) {
 		List<SISMembership> memberships = new ArrayList<SISMembership>();
 		AcademiaModule module = getModule(section.getCourseOfferingId());
+		if(module == null) return null;
 		for (String studentId : getEnrolledStudents(module)) {
 			SISMembership membership = new SISMembership(studentId);
 			membership.setUserId(studentId);
@@ -319,13 +329,15 @@ public class AcademiaIntegrationClient implements SISClient {
 
 	@Override
 	public Collection<String> getStudentList(SISCourseOffering courseOffering) {
-		AcademiaModule module = getModule(courseOffering.getId());
+		AcademiaModule module = getModule(courseOffering.getCanonicalCourseId());
+		if(module == null) return null;
 		return getEnrolledStudents(module);
 	}
 
 	@Override
 	public Collection<String> getLecturerList(SISCourseOffering courseOffering) {
-		AcademiaModule module = getModule(courseOffering.getId());
+		AcademiaModule module = getModule(courseOffering.getCanonicalCourseId());
+		if(module == null) return null;
 		return getLecturers(module);
 	}
 
@@ -412,9 +424,9 @@ public class AcademiaIntegrationClient implements SISClient {
 		return memberships;
 	}
 
-//	@Override
-//	public void destroy() {
-//		academicSessions.clear();
-//		modules.clear();
-//	}
+	@Override
+	public void destroy() {
+		academicSessions.clear();
+		modules.clear();
+	}
 }

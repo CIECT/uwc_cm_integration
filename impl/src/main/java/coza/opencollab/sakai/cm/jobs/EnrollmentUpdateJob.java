@@ -33,8 +33,6 @@ public class EnrollmentUpdateJob extends BaseCourseManagementJob implements Job 
 			throws JobExecutionException {
 		log.info("EnrollmentUpdateJob.executeJob started.");
 		
-		setClient(new SASIIntegrationClient());
-		
 		Collection<SISAcademicSession> academicSessions = getClient()
 				.getAcademicSessions();
         Collection<SISCourseChange> courseChanges = getClient()

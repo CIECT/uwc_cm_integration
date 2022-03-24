@@ -40,7 +40,6 @@ public class AcademiaCoursePopulationJob extends BaseCourseManagementJob impleme
 	}
 
 	private void createAcademiaCourseManagement() {
-		setClient(new AcademiaIntegrationClient());
 		// setup academic sessions
 		Collection<SISAcademicSession> academicSessions = getClient().getAcademicSessions();
 		List<String> asEids = new ArrayList<String>();		
@@ -51,8 +50,7 @@ public class AcademiaCoursePopulationJob extends BaseCourseManagementJob impleme
 		sisCourseSet.setTitle("Short Course");
 		sisCourseSet.setDescription("UWC Academia Short Course");
 		sisCourseSet.setCategory("main");
-		CourseSet courseSet = createCourseSet(sisCourseSet);
-		createCourseSetMemberships(sisCourseSet, getClient().getCourseSetMemberships(sisCourseSet));
+		createCourseSet(sisCourseSet);
 		
 		// setup modules
 		for (SISAcademicSession sisAcademicSession : academicSessions) {

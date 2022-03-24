@@ -108,6 +108,12 @@
 			<groupId>axis</groupId>
 			<artifactId>axis</artifactId>
 			<version>1.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.axis</groupId>
@@ -128,7 +134,22 @@
 		    <groupId>commons-discovery</groupId>
 		    <artifactId>commons-discovery</artifactId>
 		    <version>0.2</version>
-		</dependency>	
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>  
+		   <groupId>commons-logging</groupId>  
+		   <artifactId>commons-logging</artifactId>
+		   <scope>provided</scope>
+		</dependency>		
+		<dependency>
+		   <groupId>org.slf4j</groupId>  
+		   <artifactId>jcl-over-slf4j</artifactId>
+		   </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -136,6 +157,15 @@
 	</dependencies>
 	
 	<build>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
 		<!-- configure the build to use the standard maven structure -->
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>

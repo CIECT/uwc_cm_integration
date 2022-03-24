@@ -1,9 +1,17 @@
 package coza.opencollab.sakai.cm;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface SISClient {
+	
+	/**
+	 * Called before a integration session is run.
+	 */
+	public void init();
+	/**
+	 * Called after a integration session is run to fo cleanup.
+	 */
+	public void destroy();
     
     /**
      * Retrieves the academic sessions

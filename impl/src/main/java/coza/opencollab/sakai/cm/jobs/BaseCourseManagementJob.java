@@ -3,7 +3,6 @@ package coza.opencollab.sakai.cm.jobs;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -575,15 +574,11 @@ public abstract class BaseCourseManagementJob implements Job {
 	public final void execute(JobExecutionContext jobExecutionContext)
 			throws JobExecutionException {
 		logInfo("Job will now start.");
-//		if(client != null){
-//			client.init();
-//		}
+		client.init();
 		if (isValidSession()) {
 			executeJob(jobExecutionContext);
 		}
-//		if(client != null){
-//			client.destroy();
-//		}
+		client.destroy();
 		logInfo("Job has finished successfully.");
 	}
 

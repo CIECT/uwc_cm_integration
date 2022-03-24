@@ -519,14 +519,14 @@ public class SASIIntegrationClient implements SISClient {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public void destroy() {
 
-//	@Override
-//	public void destroy() {
-//
-//		academicSessions.clear();
-//		academicSessions2.clear();
-//		modules.clear();
-//		modules2.clear();
-//		enrolledStudents.clear();	
-//	}
+		academicSessions.clear();
+		academicSessions2.clear();
+		modules.clear();
+		modules2.clear();
+		enrolledStudents.clear();	
+	}
 }

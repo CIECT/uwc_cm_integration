@@ -37,7 +37,6 @@ public class FullPopulationJob extends BaseCourseManagementJob implements Job {
 	}
 
 	private void createAcademicSessions() {
-		setClient(new SASIIntegrationClient());
 		// setup academic sessions
 		Collection<SISAcademicSession> academicSessions = getClient()
 				.getAcademicSessions();

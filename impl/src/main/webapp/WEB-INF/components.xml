@@ -41,9 +41,15 @@
 	</bean -->
 
 	<!-- bean id="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient"
-		class="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" init-method="init">
+		class="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient">
 		<property name="serverConfigurationService"
 			ref="org.sakaiproject.component.api.ServerConfigurationService" />
+		<property name="sakaiSoapProxy">
+			<bean class="za.ac.uwc.www.SakaiSoapProxy">
+				<constructor-arg index="0"
+					value="http://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx" />				
+			</bean>
+		</property>
 	</bean>
 
 	<bean
@@ -109,10 +115,12 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
 		<property name="courseManagementService"
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+		<property name="client"
+			ref="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient" />
 	</bean>
 	
 	<bean id="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient"
-		class="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient" init-method="init">
+		class="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient">
 		<property name="serverConfigurationService"
 			ref="org.sakaiproject.component.api.ServerConfigurationService" />
 	</bean>

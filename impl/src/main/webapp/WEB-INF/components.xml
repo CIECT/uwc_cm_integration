@@ -24,7 +24,7 @@
 	</bean>
 
 	<!-- Full Course Management Population Job -->
-	<!-- bean id="coza.opencollab.sakai.cm.jobs.FullPopulationJob" class="coza.opencollab.sakai.cm.jobs.FullPopulationJob">
+	<bean id="coza.opencollab.sakai.cm.jobs.FullPopulationJob" class="coza.opencollab.sakai.cm.jobs.FullPopulationJob">
 		<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
 		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
 		<property name="courseManagementAdmin"
@@ -33,14 +33,14 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
 		<property name="client"
 			ref="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" />
-	</bean -->
+	</bean>
 
 	<!-- bean id="coza.opencollab.sakai.cm.test.TestClient" class="coza.opencollab.sakai.cm.test.TestClient">
 		<property name="fileDirectory"
 			value="C:\Development\Projects\Sakai\src\CM\sampleFiles\SimpleSections" />
 	</bean -->
 
-	<!-- bean id="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient"
+	<bean id="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient"
 		class="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient">
 		<property name="serverConfigurationService"
 			ref="org.sakaiproject.component.api.ServerConfigurationService" />
@@ -60,7 +60,7 @@
 		<property name="beanId" value="coza.opencollab.sakai.cm.jobs.FullPopulationJob" />
 		<property name="jobName" value="UWC Course Management Full Population Job" />
 		<property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager" />
-	</bean -->
+	</bean>
 
 	<!-- Delta Course Management Job -->
 	<!-- bean 	

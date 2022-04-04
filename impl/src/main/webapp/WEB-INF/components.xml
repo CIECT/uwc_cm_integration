@@ -31,6 +31,8 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
 		<property name="courseManagementService"
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+		<property name="authzGroupService"
+			ref="org.sakaiproject.authz.api.AuthzGroupService" />
 		<property name="client"
 			ref="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" />
 	</bean>
@@ -72,6 +74,8 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
 		<property name="courseManagementService"
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+		<property name="authzGroupService"
+			ref="org.sakaiproject.authz.api.AuthzGroupService" />
 		<property name="client"
 			ref="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" />
 	</bean>
@@ -94,6 +98,8 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
 		<property name="courseManagementService"
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+		<property name="authzGroupService"
+			ref="org.sakaiproject.authz.api.AuthzGroupService" />
 	</bean>
 
 	<bean
@@ -115,6 +121,8 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementAdministration" />
 		<property name="courseManagementService"
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
+		<property name="authzGroupService"
+			ref="org.sakaiproject.authz.api.AuthzGroupService" />
 		<property name="client"
 			ref="coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient" />
 	</bean>

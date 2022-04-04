@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.sakaiproject.authz.api.AuthzGroupService;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.coursemanagement.api.AcademicSession;
 import org.sakaiproject.coursemanagement.api.CanonicalCourse;
@@ -49,6 +50,7 @@ public abstract class BaseCourseManagementJob implements Job {
 	private SecurityService securityService;
 	private CourseManagementService cmService;
 	private CourseManagementAdministration cmAdmin;
+	private AuthzGroupService authzGroupService;
 
 	private SISClient client;
 
@@ -294,6 +296,7 @@ public abstract class BaseCourseManagementJob implements Job {
 					courseOfferingMembership.getStatus());
 		log.info("Added/Updated CourseOfferingMemberships - " + courseOfferingMembership.getUserId() + " to courseOfferingId "
 					+ courseOffering.getId());
+		authzGroupService.refreshUser(courseOfferingMembership.getUserId());
 		return membership;
 	}
 	
@@ -313,6 +316,7 @@ public abstract class BaseCourseManagementJob implements Job {
 		cmAdmin.removeCourseOfferingMembership(userId, courseOffering.getId());
 		log.info("Removed CourseOfferingMemberships - " + userId + " to courseOfferingId "
 				+ courseOffering.getId());
+		authzGroupService.refreshUser(userId);
 	}
 	
 	/**
@@ -419,6 +423,7 @@ public abstract class BaseCourseManagementJob implements Job {
 				enrollment.getGradingScheme());
 		log.info("Added/Updated Enrollment for user id " + enrollment.getStudentId()
 				+ " and enrollmentset " + enrollment.getEnrollmentSetId());
+		authzGroupService.refreshUser(enrollment.getStudentId());
 		return e;
 	}
 	
@@ -440,6 +445,7 @@ public abstract class BaseCourseManagementJob implements Job {
 			cmAdmin.removeEnrollment(userId, enrollmentSet.getEid());
 			log.info("Removed Enrollment for user id " + userId
 				+ " and enrollmentset " + enrollmentSet.getEid());
+			authzGroupService.refreshUser(userId);
 		}
 	}
 
@@ -542,6 +548,7 @@ public abstract class BaseCourseManagementJob implements Job {
 					sectionMembership.getStatus());
 		log.info("Added/Updated SectionMembership - " + sectionMembership.getUserId() + " to sectionEid "
 					+ section.getId());
+		authzGroupService.refreshUser(sectionMembership.getUserId());
 		return membership;
 	}
 	
@@ -563,6 +570,7 @@ public abstract class BaseCourseManagementJob implements Job {
 			cmAdmin.removeSectionMembership(userId, section.getEid());
 			log.info("Removed SectionMembership for user id " + userId
 				+ " and sectionEid " + section.getEid());
+			authzGroupService.refreshUser(userId);
 		}
 	}
 
@@ -625,6 +633,10 @@ public abstract class BaseCourseManagementJob implements Job {
 	public void setCourseManagementAdmin(CourseManagementAdministration cmAdmin) {
 		this.cmAdmin = cmAdmin;
 	}
+	
+	public void setAuthzGroupService(AuthzGroupService authzGroupService) {
+		this.authzGroupService = authzGroupService;
+	}	
 
 	public SISClient getClient() {
 		return client;

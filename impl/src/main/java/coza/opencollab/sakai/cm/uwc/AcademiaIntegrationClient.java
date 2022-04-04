@@ -107,11 +107,11 @@ public class AcademiaIntegrationClient implements SISClient {
 				academicSession = new SISAcademicSession(
 						intakeArray[i][1] + " " + intakeArray[i][0],
 						intakeArray[i][1], 
-						intakeArray[i][2] + " " + intakeArray[i][0], 
+						intakeArray[i][2], 
 						intakeArray[i][0],
 						Utils.getDateFromString(intakeArray[i][3]), 
 						Utils.getDateFromString(intakeArray[i][4]),
-						"Academic Session for " + intakeArray[i][0] + " " + intakeArray[i][2]);
+						"Academic Session for " + intakeArray[i][2]);
 
 				academicSessions.put(academicSession.getId(), academicSession);
 			}
@@ -187,6 +187,8 @@ public class AcademiaIntegrationClient implements SISClient {
 					courseOffering.setModulePeriodCode(module.getModulePeriodCode());
 					courseOffering.setModulePeriodCodeDescr(modulePeriodArray[i][1]);
 					courseOffering.addCourseSetIds(courseSetId);
+					module.setModulePeriodCodeDescr(modulePeriodArray[i][1]);
+					modules.put(module.getModuleCode(), module);
 					return courseOffering;
 				}
 			}
@@ -303,7 +305,7 @@ public class AcademiaIntegrationClient implements SISClient {
 		SISSection section = new SISSection(module.getCourseOfferingReference());
 		section.setId(module.getCourseOfferingReference());
 		section.setTitle(module.getCourseOfferingReference());
-		section.setDescription(module.getCourseOfferingReference() + courseOffering.getModulePeriodCodeDescr());
+		section.setDescription(module.getCourseOfferingReference());
 		section.setCategoryCode(module.getModulePeriodCode());
 		section.setCategoryDescription(courseOffering.getModulePeriodCodeDescr());
 		section.setParentSectionId(null);

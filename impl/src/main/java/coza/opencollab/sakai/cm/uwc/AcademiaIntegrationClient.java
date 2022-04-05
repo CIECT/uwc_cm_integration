@@ -107,11 +107,11 @@ public class AcademiaIntegrationClient implements SISClient {
 				academicSession = new SISAcademicSession(
 						intakeArray[i][1] + " " + intakeArray[i][0],
 						intakeArray[i][1], 
-						intakeArray[i][2], 
+						intakeArray[i][2]  + " " + intakeArray[i][0],
 						intakeArray[i][0],
 						Utils.getDateFromString(intakeArray[i][3]), 
 						Utils.getDateFromString(intakeArray[i][4]),
-						"Academic Session for " + intakeArray[i][2]);
+						"Academic Session for " + intakeArray[i][2] + " " + intakeArray[i][0]);
 
 				academicSessions.put(academicSession.getId(), academicSession);
 			}

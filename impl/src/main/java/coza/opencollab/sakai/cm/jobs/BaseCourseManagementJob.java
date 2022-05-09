@@ -84,6 +84,7 @@ public abstract class BaseCourseManagementJob implements Job {
 			aSession = cmService.getAcademicSession(academicSession.getId());
 			log.debug("Retrieved AcademicSession with id " + academicSession.getId());
 		} catch (IdNotFoundException e) {
+			log.info("Create AcademicSession: " + academicSession);
 			aSession = cmAdmin.createAcademicSession(
 					academicSession.getId(),
 					academicSession.getTitle(),
@@ -138,6 +139,7 @@ public abstract class BaseCourseManagementJob implements Job {
 		if (cmService.isCourseSetDefined(courseSet.getId())) {
 			cs = cmService.getCourseSet(courseSet.getId());
 		}else{
+			log.info("Create CourseSet: " + courseSet);
 			cs = cmAdmin.createCourseSet(courseSet.getId(), courseSet.getTitle(), 
 					courseSet.getDescription(), courseSet.getCategory(), null);
 			log.info("Inserted CourseSet with id " + courseSet.getId());
@@ -175,6 +177,7 @@ public abstract class BaseCourseManagementJob implements Job {
 		if (cmService.isCanonicalCourseDefined(canonicalCourse.getId())) {
         	cc = cmService.getCanonicalCourse(canonicalCourse.getId());
         }else{
+			log.info("Create CanonicalCourse: " + canonicalCourse);
 			cc = cmAdmin.createCanonicalCourse(canonicalCourse.getId(),
 					canonicalCourse.getTitle(),
 					canonicalCourse.getDescription());
@@ -206,6 +209,7 @@ public abstract class BaseCourseManagementJob implements Job {
 		if (cmService.isCourseOfferingDefined(courseOffering.getId())) {
 			co = cmService.getCourseOffering(courseOffering.getId());
 		}else{
+			log.info("Create CourseOffering: " + courseOffering);
 			co = cmAdmin.createCourseOffering(courseOffering.getId(),
 					courseOffering.getTitle(),
 					courseOffering.getDescription(), 
@@ -338,6 +342,7 @@ public abstract class BaseCourseManagementJob implements Job {
 		if(cmService.isEnrollmentSetDefined(enrollmentSet.getId())){
 			es = cmService.getEnrollmentSet(enrollmentSet.getId());
 		}else{
+			log.info("Create EnrollmentSet: " + enrollmentSet);
 			es = cmAdmin.createEnrollmentSet(enrollmentSet.getId(),
 					enrollmentSet.getTitle(), enrollmentSet.getDescription(), 
 					enrollmentSet.getCategory(), enrollmentSet.getDefaultEnrollmentCredits(), 
@@ -361,6 +366,7 @@ public abstract class BaseCourseManagementJob implements Job {
                 log.error("can't save instructor enrollment set", e);
             }
 		}else{
+			log.info("Create EnrollmentSet: " + enrollmentSet);
 			es = cmAdmin.createEnrollmentSet(enrollmentSet.getId(),
 					enrollmentSet.getTitle(), enrollmentSet.getDescription(), 
 					enrollmentSet.getCategory(), enrollmentSet.getDefaultEnrollmentCredits(), 
@@ -489,6 +495,7 @@ public abstract class BaseCourseManagementJob implements Job {
 			s = cmService.getSection(section.getId());
 		}else{
 			createSectionCategory(section.getCategoryCode(), section.getCategoryDescription());
+			log.info("Create Section: " + section);
 			s = cmAdmin.createSection(section.getId(),
 					section.getTitle(), section.getDescription(),
 					section.getCategoryCode(), section.getParentSectionId(),

@@ -175,6 +175,9 @@ public class AcademiaIntegrationClient implements SISClient {
 
 				if (StringUtils.equals(module.getModulePeriodCode(), modulePeriodArray[i][0])) {
 
+					module.setModulePeriodCodeDescr(modulePeriodArray[i][1]);
+					modules.put(module.getModuleCode(), module);
+					
 					SISCourseOffering courseOffering = new SISCourseOffering(module.getModuleCode());
 					courseOffering.setId(module.getCourseOfferingReference());
 					courseOffering.setTitle(module.getCanonicalCourseReference());
@@ -187,8 +190,6 @@ public class AcademiaIntegrationClient implements SISClient {
 					courseOffering.setModulePeriodCode(module.getModulePeriodCode());
 					courseOffering.setModulePeriodCodeDescr(modulePeriodArray[i][1]);
 					courseOffering.addCourseSetIds(courseSetId);
-					module.setModulePeriodCodeDescr(modulePeriodArray[i][1]);
-					modules.put(module.getModuleCode(), module);
 					return courseOffering;
 				}
 			}

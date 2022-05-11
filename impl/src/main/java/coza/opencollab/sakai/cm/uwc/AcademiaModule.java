@@ -101,7 +101,8 @@ public class AcademiaModule {
 	 * Course Management Helper method - CourseOffering eid example: ESS Y 112 2012
 	 */
 	public String getCourseOfferingReference() {
-		return getDescription() + " " + academicSession.getTitle() + " " + modulePeriodCodeDescr + " " + academicSession.getYear();
+//		return getDescription() + " " + academicSession.getTitle() + " " + modulePeriodCodeDescr + " " + academicSession.getYear();
+		return getDescription() + " " + modulePeriodCodeDescr + " " + academicSession.getTitle();
 	}
 
 	/**

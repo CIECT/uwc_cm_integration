@@ -7,7 +7,7 @@
 		<groupId>org.sakaiproject</groupId>
 		<artifactId>master</artifactId>
 		<version>23.2</version>
-		<relativePath>../../master</relativePath>
+		<relativePath>../master</relativePath>
 	</parent>
 
 	<groupId>coza.opencollab.sakai</groupId>

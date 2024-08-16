@@ -39,6 +39,7 @@
         <dependency>
             <groupId>org.sakaiproject.kernel</groupId>
             <artifactId>sakai-kernel-private</artifactId>
+			<version>${sakai.version}</version>
         </dependency>
 		<dependency>
 			<groupId>org.sakaiproject.sitemanage</groupId>

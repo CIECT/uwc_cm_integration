@@ -11,12 +11,12 @@
 	</parent>
 	<artifactId>uwc-cm-integration-impl</artifactId>
 	<name>UWC CM Integration Impl</name>
-		
+
 	<packaging>sakai-component</packaging>
 	<properties>
         <deploy.target>components</deploy.target>
 	</properties>
-	
+
 	<dependencies>
 		<!-- project dependencies -->
 		<dependency>
@@ -28,11 +28,13 @@
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-component-manager</artifactId>
+			<version>${sakai.version}</version>
 		</dependency>
 		<!-- Sakai Kernel APIs -->
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
 			<artifactId>sakai-kernel-api</artifactId>
+			<version>${sakai.version}</version>
 		</dependency>
         <dependency>
             <groupId>org.sakaiproject.kernel</groupId>
@@ -141,13 +143,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>  
-		   <groupId>commons-logging</groupId>  
-		   <artifactId>commons-logging</artifactId>
-		   <scope>provided</scope>
-		</dependency>		
 		<dependency>
-		   <groupId>org.slf4j</groupId>  
+		   <groupId>org.slf4j</groupId>
 		   <artifactId>jcl-over-slf4j</artifactId>
 		   </dependency>
         <dependency>
@@ -155,7 +152,7 @@
             <artifactId>mockito-core</artifactId>
         </dependency>
 	</dependencies>
-	
+
 	<build>
         <resources>
             <resource>
@@ -179,5 +176,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

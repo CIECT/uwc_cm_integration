@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -20,6 +18,8 @@ import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISMembership;
 import coza.opencollab.sakai.cm.SISSection;
 import coza.opencollab.sakai.cm.uwc.SASIIntegrationClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a quartz job that will update Course sites with enrolled Student
@@ -27,16 +27,16 @@ import coza.opencollab.sakai.cm.uwc.SASIIntegrationClient;
  */
 public class EnrollmentUpdateJob extends BaseCourseManagementJob implements Job {
 
-	private static final Logger log = LogManager.getLogger(EnrollmentUpdateJob.class);
-	
+	private static final Logger log = LoggerFactory.getLogger(EnrollmentUpdateJob.class);
+
 	public void executeJob(JobExecutionContext jobExecutionContext)
 			throws JobExecutionException {
 		log.info("EnrollmentUpdateJob.executeJob started.");
-		
+
 		Collection<SISAcademicSession> academicSessions = getClient()
 				.getAcademicSessions();
         Collection<SISCourseChange> courseChanges = getClient()
-                .getCourseChanges();		
+                .getCourseChanges();
         for (SISCourseChange courseChange : courseChanges) {
             updateCourseChanges(academicSessions, courseChange);
         }
@@ -51,24 +51,24 @@ public class EnrollmentUpdateJob extends BaseCourseManagementJob implements Job 
                 academicSession));
             SISCourseOffering courseOffering = courseOfferings.get(courseChange.getModuleCode());
             if (courseOffering != null) {
-                if ("ADD".equals(courseChange.getMaintananceIndicator())) {                	
+                if ("ADD".equals(courseChange.getMaintananceIndicator())) {
 
             		log.info("ADD updateCourseChanges: ");
             		log.info(" 		academicSession: " + academicSession);
             		log.info(" 		courseOffering: " + courseOffering);
             		log.info(" 		courseChange: " + courseChange);
-                	
+
                     // check if course management data exist for module in sakai
                     addData(academicSession, courseOffering, courseChange);
                 }
                 else if ("DEL".equals(courseChange.getMaintananceIndicator())) {
-                	
+
 
             		log.info("DEL updateCourseChanges: ");
             		log.info(" 		academicSession: " + academicSession);
             		log.info(" 		courseOffering: " + courseOffering);
             		log.info(" 		courseChange: " + courseChange);
-            		
+
                     removeData(academicSession, courseOffering, courseChange);
                 }
             }

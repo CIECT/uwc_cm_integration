@@ -69,7 +69,7 @@ public class SASIIntegrationClient implements SISClient {
 			limitModules = true;
 		}
 
-		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, "http://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx")));
+		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, "https://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx")));
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public interface SakaiSoap extends java.rmi.Remote {
      * Web Service method for Download_Faculty.<inputParameters><inputParameter
      * name='Faculty' length='1' hostDataType='alpha' /></inputParameters>
      */
-    public za.ac.uwc.www.Download_Faculty_Output download_Faculty(za.ac.uwc.www.Download_Faculty_Input download_FacultyRequest) throws java.rmi.RemoteException;
+    public za.ac.uwc.www.Download_Faculty_Output download_Faculty(Download_Faculty_Input download_FacultyRequest, String s) throws java.rmi.RemoteException;
 
     /**
      * Web Service method for Download_Department.<inputParameters><inputParameter

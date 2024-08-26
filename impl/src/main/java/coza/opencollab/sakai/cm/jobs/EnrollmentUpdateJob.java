@@ -17,7 +17,6 @@ import coza.opencollab.sakai.cm.SISCourseOffering;
 import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISMembership;
 import coza.opencollab.sakai.cm.SISSection;
-import coza.opencollab.sakai.cm.uwc.SASIIntegrationClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +61,6 @@ public class EnrollmentUpdateJob extends BaseCourseManagementJob implements Job 
                     addData(academicSession, courseOffering, courseChange);
                 }
                 else if ("DEL".equals(courseChange.getMaintananceIndicator())) {
-
 
             		log.info("DEL updateCourseChanges: ");
             		log.info(" 		academicSession: " + academicSession);

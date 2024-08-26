@@ -7,11 +7,15 @@
 
 package za.ac.uwc.www;
 
+import javax.xml.soap.SOAPHeaderElement;
+
 public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.uwc.www.SakaiSoap {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
     private java.util.Vector cachedDeserFactories = new java.util.Vector();
+
+    private SOAPHeaderElement authHeader = null;
 
     static org.apache.axis.description.OperationDesc [] _operations;
 
@@ -303,7 +307,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         }
     }
 
-    public za.ac.uwc.www.Download_Faculty_Output download_Faculty(za.ac.uwc.www.Download_Faculty_Input download_FacultyRequest) throws java.rmi.RemoteException {
+    public za.ac.uwc.www.Download_Faculty_Output download_Faculty(za.ac.uwc.www.Download_Faculty_Input download_FacultyRequest, String token) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -316,7 +320,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Faculty"));
-
+        authHeader.setAttribute("Authorization", "Bearer " + token);;
+        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         setRequestHeaders(_call);
         setAttachments(_call);
  try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_FacultyRequest});

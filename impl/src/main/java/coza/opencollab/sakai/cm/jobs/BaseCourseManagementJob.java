@@ -1,5 +1,6 @@
 package coza.opencollab.sakai.cm.jobs;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -589,7 +590,11 @@ public abstract class BaseCourseManagementJob implements Job {
 	public final void execute(JobExecutionContext jobExecutionContext)
 			throws JobExecutionException {
 		logInfo("Job will now start.");
-		client.init();
+		try {
+			client.init();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
 		if (isValidSession()) {
 			executeJob(jobExecutionContext);
 		}

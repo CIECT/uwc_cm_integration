@@ -32,7 +32,7 @@ public class SASISakaiWebserviceIntegrationTest {
         Calendar cal = Calendar.getInstance();
         int currentYear = cal.get(Calendar.YEAR);
         SakaiSoapProxy proxy = new SakaiSoapProxy(
-                "http://196.11.235.60/applctns_sakai_WS/sakai.asmx");
+                "http://196.11.235.60/applctns_sakai_WS/sakai.asmx", "testToken");
         //Academic Sessions
         getSASIAcademicSessions(proxy, currentYear);
         //Faculties
@@ -296,7 +296,7 @@ public class SASISakaiWebserviceIntegrationTest {
                 out = new FileOutputStream("Faculties2.txt");
                 p = new PrintStream(out);
             }
-            facultyOutput = proxy.getSakaiSoap().download_Faculty(facultyInput);
+            facultyOutput = proxy.getSakaiSoap().download_Faculty(facultyInput, "TestToken");
             String[][] facultyArray = facultyOutput.getFaculty_List();
             for (int i = 0; i < facultyArray.length; i++) {
                 //            for (int i = 0; i < 5; i++) {

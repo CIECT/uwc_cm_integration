@@ -1,5 +1,6 @@
 package coza.opencollab.sakai.cm;
 
+import java.net.MalformedURLException;
 import java.util.Collection;
 
 public interface SISClient {
@@ -7,7 +8,7 @@ public interface SISClient {
 	/**
 	 * Called before a integration session is run.
 	 */
-	public void init();
+	public void init() throws MalformedURLException;
 	/**
 	 * Called after a integration session is run to fo cleanup.
 	 */

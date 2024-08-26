@@ -1,16 +1,11 @@
 package coza.opencollab.sakai.cm.uwc;
 
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import com.microsoft.aad.msal4j.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
 
 import coza.opencollab.sakai.cm.SISAcademicSession;
@@ -44,7 +39,10 @@ import za.ac.uwc_academia.www.RequestPortProxy;
 public class SASIIntegrationClient implements SISClient {
 	public static final String CONFIG_YEAR = "uwc.coursemanagement.year";
 	public static final String CONFIG_MODULE_LIMIT = "uwc.coursemanagement.module.limit";
-	public static final String SASI_WEBSERVICE_URL = "uwc.cm.sasi.webservice.url";
+	public String SASI_WEBSERVICE_URL = "uwc.cm.sasi.webservice.url";
+	public String PUBLIC_CLIENT_ID =  "uwc.cm.sasi.webservice.PUBLIC_CLIENT_ID";
+	public String AUTHORITY =  "uwc.cm.sasi.webservice.AUTHORITY";
+	public String CLIENT_SECRET =  "uwc.cm.sasi.webservice.CLIENT_SECRET";
 	private ServerConfigurationService serverConfigurationService;
 	private SakaiSoapProxy proxy;
 	// all the current values
@@ -57,19 +55,43 @@ public class SASIIntegrationClient implements SISClient {
 	private boolean isCanonicalDone = false;
 	private boolean limitModules = false;
 	private int moduleLimit;
-	
+
+	private String clientId = "";
+	private IClientCredential credential = null;
+	private Set<String> scope; // Replace with the appropriate scope for your API
+	private String sakaiUrl = "";
+	private SakaiSoapProxy sakaiSoapProxy;
+	private IAuthenticationResult _token;
+
 	public void setSakaiSoapProxy(SakaiSoapProxy proxy) {
 		this.proxy = proxy;
 	}
 
-	public void init() {	
-		
-		moduleLimit = serverConfigurationService.getInt(CONFIG_MODULE_LIMIT, 0);
-		if(moduleLimit > 0){
+	public void init() throws MalformedURLException {
+		PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
+		AUTHORITY = serverConfigurationService.getString(AUTHORITY);
+		CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
+
+		IClientCredential credential = ClientCredentialFactory.createFromSecret(CLIENT_SECRET);
+		ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
+
+		Set<String> scopes = (Set<String>) Arrays.asList(new String[]{"api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use"});
+		ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
+		_token = (IAuthenticationResult) app.acquireToken(credentials);
+
+		System.out.println("##############################################################################################");
+		System.out.println(_token);
+		System.out.println("##############################################################################################");
+		// Set up the SOAP proxy with the access token in the header
+		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, " https://az-jhb-uwc-apim-int-test-01.azure-api.net/sakai_api/v1/"), _token.accessToken()));
+		//sakaiSoapProxy = new SakaiSoapProxy(sakaiUrl);
+		//sakaiSoapProxy.addHeader("Authorization", "Bearer " + result.accessToken());
+
+		// Check for module limit configuration (existing code)
+		int moduleLimit = serverConfigurationService.getInt(CONFIG_MODULE_LIMIT, 0);
+		if (moduleLimit > 0) {
 			limitModules = true;
 		}
-
-		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, "https://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx")));
 	}
 
 	@Override
@@ -97,7 +119,7 @@ public class SASIIntegrationClient implements SISClient {
 	 * Get the academic year from sakai.properties, if it is not there the 
 	 * default is current year.
 	 * 
-	 * @see coza.opencollab.sakai.cm.IntegrationClient#getAcademicYear()
+	 * // @see coza.opencollab.sakai.cm.IntegrationClient#getAcademicYear()
 	 */
 	private String getAcademicYear() {
 		int year = serverConfigurationService.getInt(CONFIG_YEAR, 0);
@@ -349,7 +371,7 @@ public class SASIIntegrationClient implements SISClient {
 		List<Faculty> facultyList = new ArrayList<Faculty>();
 		try {
 			Download_Faculty_Output facultyOutput = proxy.getSakaiSoap()
-					.download_Faculty(new Download_Faculty_Input());
+					.download_Faculty(new Download_Faculty_Input(), _token.accessToken());
 			String[][] facultyArray = facultyOutput.getFaculty_List();
 			Faculty faculty = null;
 			for (int i = 0; i < facultyArray.length; i++) {

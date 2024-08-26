@@ -80,7 +80,7 @@ public class AcademiaIntegrationClient implements SISClient {
 	 * Get the academic year from sakai.properties, if it is not there the default
 	 * is current year.
 	 * 
-	 * @see coza.opencollab.sakai.cm.IntegrationClient#getAcademicYear()
+	 * @see coza.opencollab.sakai.cm.IntegrationClientgetAcademicYear()
 	 */
 	private String getAcademicYear() {
 		int year = serverConfigurationService.getInt(ACADEMIA_CONFIG_YEAR, 0);

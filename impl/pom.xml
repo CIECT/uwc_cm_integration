@@ -39,7 +39,8 @@
         <dependency>
             <groupId>org.sakaiproject.kernel</groupId>
             <artifactId>sakai-kernel-private</artifactId>
-			<version>${sakai.version}</version>
+			<version>22.5</version>
+			<scope>provided</scope>
         </dependency>
 		<dependency>
 			<groupId>org.sakaiproject.sitemanage</groupId>
@@ -152,6 +153,39 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
+		<dependency>
+			<groupId>com.azure</groupId>
+			<artifactId>azure-sdk-bom</artifactId>
+			<version>1.2.25</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.azure</groupId>
+			<artifactId>azure-identity</artifactId>
+			<version>1.13.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.azure</groupId>
+			<artifactId>msal4j</artifactId>
+			<version>1.16.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.microsoft.aad</groupId>
+			<artifactId>adal4j</artifactId>
+			<version>0.0.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

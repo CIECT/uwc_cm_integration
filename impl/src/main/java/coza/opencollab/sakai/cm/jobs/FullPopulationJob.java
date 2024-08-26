@@ -21,8 +21,6 @@ import coza.opencollab.sakai.cm.SISCourseSet;
 import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISEnrollmentSet;
 import coza.opencollab.sakai.cm.SISSection;
-import coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient;
-import coza.opencollab.sakai.cm.uwc.SASIIntegrationClient;
 import coza.opencollab.sakai.cm.SISMembership;
 
 /**

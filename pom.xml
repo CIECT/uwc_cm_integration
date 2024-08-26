@@ -7,7 +7,7 @@
 		<groupId>org.sakaiproject</groupId>
 		<artifactId>master</artifactId>
 		<version>23.2</version>
-		<relativePath>../master</relativePath>
+		<relativePath>../sakai/master</relativePath>
 	</parent>
 
 	<groupId>coza.opencollab.sakai</groupId>
@@ -30,7 +30,7 @@
 	</build>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sakai.version>21.1</sakai.version>
+		<sakai.version>23.2</sakai.version>
 	</properties>
 
 	<dependencies>

@@ -50,6 +50,7 @@
 			<bean class="za.ac.uwc.www.SakaiSoapProxy">
 				<constructor-arg index="0"
 					value="https://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx" />
+				<constructor-arg index="1" value ="" />
 			</bean>
 		</property>
 	</bean>

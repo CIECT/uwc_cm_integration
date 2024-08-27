@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import com.microsoft.aad.msal4j.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
@@ -75,10 +77,19 @@ public class SASIIntegrationClient implements SISClient {
 		IClientCredential credential = ClientCredentialFactory.createFromSecret(CLIENT_SECRET);
 		ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
 
-		Set<String> scopes = (Set<String>) Arrays.asList(new String[]{"api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use"});
+		Set<String> scopes = Set.of("api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use");
+		System.out.println("#####" + scopes.getClass().getName());
 		ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
-		_token = (IAuthenticationResult) app.acquireToken(credentials);
-
+		CompletableFuture<IAuthenticationResult> authenticationFuture = new CompletableFuture<>();
+		try {
+			IAuthenticationResult authenticationResult = authenticationFuture.get();
+			// Use the authentication result here
+			_token = authenticationResult;
+			System.out.println("Authentication token: " + authenticationResult.accessToken());
+		} catch (InterruptedException | ExecutionException e) {
+			// Handle exceptions that might occur during waiting or retrieval
+			e.printStackTrace();
+		}
 		System.out.println("##############################################################################################");
 		System.out.println(_token);
 		System.out.println("##############################################################################################");

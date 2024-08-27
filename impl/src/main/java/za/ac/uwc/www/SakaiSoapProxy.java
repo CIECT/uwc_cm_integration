@@ -5,7 +5,9 @@ import org.sakaiproject.component.api.ServerConfigurationService;
 
 import java.net.MalformedURLException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   private String _endpoint = null;
@@ -43,8 +45,9 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
           ((javax.xml.rpc.Stub)sakaiSoap)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
         else
           _endpoint = (String)((javax.xml.rpc.Stub)sakaiSoap)._getProperty("javax.xml.rpc.service.endpoint.address");
-        if (_token != null)
-          ((javax.xml.rpc.Stub)sakaiSoap)._setProperty("javax.xml.rpc.service.endpoint.token", _token);
+        if (_token != null) {
+
+        }
         else
           setToken();
       }
@@ -72,8 +75,8 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
 
     IClientCredential credential = ClientCredentialFactory.createFromSecret(CLIENT_SECRET);
     ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
-
-    Set<String> scopes = (Set<String>) Arrays.asList(new String[]{"api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use"});
+    Set<String> scopes = Set.of("api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use");
+    System.out.println("#####" + scopes.getClass().getName());
     ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
     _Authtoken = (IAuthenticationResult) app.acquireToken(credentials);
 

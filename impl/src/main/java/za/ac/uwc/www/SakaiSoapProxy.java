@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
@@ -69,6 +70,7 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   }
 
   public void setToken() throws MalformedURLException {
+
     PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
     AUTHORITY = serverConfigurationService.getString(AUTHORITY);
     CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
@@ -77,10 +79,19 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
     ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
     Set<String> scopes = Set.of("api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use");
     System.out.println("#####" + scopes.getClass().getName());
-    ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
-    _Authtoken = (IAuthenticationResult) app.acquireToken(credentials);
+   // ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
+    CompletableFuture<IAuthenticationResult> future = app.acquireToken(ClientCredentialParameters.builder(scopes).build());
+    future.handle((authenticationResult, throwable) -> {
+      if( throwable != null ) {
+        System.out.println("throwable = " + throwable);
+        return null;
+      }
 
-  _token = _Authtoken.accessToken();
+      _token = authenticationResult.accessToken();
+      System.out.println("accessToken = " + _token);
+      return _token;
+    });
+    System.out.println(_token);
   }
   
   public void setEndpoint(String endpoint) {

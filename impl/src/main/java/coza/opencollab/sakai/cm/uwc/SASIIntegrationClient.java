@@ -63,7 +63,7 @@ public class SASIIntegrationClient implements SISClient {
 	private Set<String> scope; // Replace with the appropriate scope for your API
 	private String sakaiUrl = "";
 	private SakaiSoapProxy sakaiSoapProxy;
-	private IAuthenticationResult _token;
+	private String _token;
 
 	public void setSakaiSoapProxy(SakaiSoapProxy proxy) {
 		this.proxy = proxy;
@@ -73,28 +73,25 @@ public class SASIIntegrationClient implements SISClient {
 		PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
 		AUTHORITY = serverConfigurationService.getString(AUTHORITY);
 		CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
-
 		IClientCredential credential = ClientCredentialFactory.createFromSecret(CLIENT_SECRET);
 		ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
-
 		Set<String> scopes = Set.of("api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use");
 		System.out.println("#####" + scopes.getClass().getName());
-		ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
-		CompletableFuture<IAuthenticationResult> authenticationFuture = new CompletableFuture<>();
-		try {
-			IAuthenticationResult authenticationResult = authenticationFuture.get();
-			// Use the authentication result here
-			_token = authenticationResult;
-			System.out.println("Authentication token: " + authenticationResult.accessToken());
-		} catch (InterruptedException | ExecutionException e) {
-			// Handle exceptions that might occur during waiting or retrieval
-			e.printStackTrace();
-		}
-		System.out.println("##############################################################################################");
+		//ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
+		CompletableFuture<IAuthenticationResult> future = app.acquireToken(ClientCredentialParameters.builder(scopes).build());
+		future.handle((authenticationResult, throwable) -> {
+			if( throwable != null ) {
+				System.out.println("throwable = " + throwable);
+				return null;
+			}
+
+			_token = authenticationResult.accessToken();
+			System.out.println("accessToken = " + _token);
+			return _token;
+		});
 		System.out.println(_token);
-		System.out.println("##############################################################################################");
 		// Set up the SOAP proxy with the access token in the header
-		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, " https://az-jhb-uwc-apim-int-test-01.azure-api.net/sakai_api/v1/"), _token.accessToken()));
+		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, " https://az-jhb-uwc-apim-int-test-01.azure-api.net/sakai_api/v1/"), _token));
 		//sakaiSoapProxy = new SakaiSoapProxy(sakaiUrl);
 		//sakaiSoapProxy.addHeader("Authorization", "Bearer " + result.accessToken());
 
@@ -151,6 +148,11 @@ public class SASIIntegrationClient implements SISClient {
 			m = modules2.get(key);
 		}
 		return m;
+	}
+
+	public String getToken() {
+
+		return _token;
 	}
 
 	@Override
@@ -382,7 +384,7 @@ public class SASIIntegrationClient implements SISClient {
 		List<Faculty> facultyList = new ArrayList<Faculty>();
 		try {
 			Download_Faculty_Output facultyOutput = proxy.getSakaiSoap()
-					.download_Faculty(new Download_Faculty_Input(), _token.accessToken());
+					.download_Faculty(new Download_Faculty_Input(), _token);
 			String[][] facultyArray = facultyOutput.getFaculty_List();
 			Faculty faculty = null;
 			for (int i = 0; i < facultyArray.length; i++) {

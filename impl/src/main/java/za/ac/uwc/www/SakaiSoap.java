@@ -21,14 +21,14 @@ public interface SakaiSoap extends java.rmi.Remote {
      * name='Department_code' length='6' hostDataType='alpha' /><inputParameter
      * name='Faculty' length='3' hostDataType='alpha' /></inputParameters>
      */
-    public za.ac.uwc.www.Download_Department_Output download_Department(za.ac.uwc.www.Download_Department_Input download_DepartmentRequest) throws java.rmi.RemoteException;
+    public za.ac.uwc.www.Download_Department_Output download_Department(Download_Department_Input download_DepartmentRequest, String _token) throws java.rmi.RemoteException;
 
     /**
      * Web Service method for Download_CalendarGroup.<inputParameters><inputParameter
      * name='Year' length='4' hostDataType='number' /><inputParameter name='Calendar_Group'
      * length='1' hostDataType='alpha' /></inputParameters>
      */
-    public za.ac.uwc.www.Download_CalendarGroup_Output download_CalendarGroup(za.ac.uwc.www.Download_CalendarGroup_Input download_CalendarGroupRequest) throws java.rmi.RemoteException;
+    public za.ac.uwc.www.Download_CalendarGroup_Output download_CalendarGroup(Download_CalendarGroup_Input download_CalendarGroupRequest, String _token) throws java.rmi.RemoteException;
 
     /**
      * Web Service method for Download_Students.<inputParameters><inputParameter
@@ -36,14 +36,14 @@ public interface SakaiSoap extends java.rmi.Remote {
      * name='Student' length='1' hostDataType='alpha' /><inputParameter name='Year'
      * length='4' hostDataType='number' /></inputParameters>
      */
-    public za.ac.uwc.www.Download_Students_Output download_Students(za.ac.uwc.www.Download_Students_Input download_StudentsRequest) throws java.rmi.RemoteException;
+    public za.ac.uwc.www.Download_Students_Output download_Students(Download_Students_Input download_StudentsRequest, String _token) throws java.rmi.RemoteException;
 
     /**
      * Web Service method for Download_CourseChanges.<inputParameters><inputParameter
      * name='Year' length='4' hostDataType='number' /><inputParameter name='Course_Changes'
      * length='1' hostDataType='alpha' /></inputParameters>
      */
-    public za.ac.uwc.www.Download_CourseChanges_Output download_CourseChanges(za.ac.uwc.www.Download_CourseChanges_Input download_CourseChangesRequest) throws java.rmi.RemoteException;
+    public za.ac.uwc.www.Download_CourseChanges_Output download_CourseChanges(Download_CourseChanges_Input download_CourseChangesRequest, String _token) throws java.rmi.RemoteException;
 
     /**
      * Web Service method for Download_Modules.<inputParameters><inputParameter
@@ -52,5 +52,5 @@ public interface SakaiSoap extends java.rmi.Remote {
      * length='9' hostDataType='alpha' /><inputParameter name='Module' length='1'
      * hostDataType='alpha' /></inputParameters>
      */
-    public za.ac.uwc.www.Download_Modules_Output download_Modules(za.ac.uwc.www.Download_Modules_Input download_ModulesRequest) throws java.rmi.RemoteException;
+    public za.ac.uwc.www.Download_Modules_Output download_Modules(Download_Modules_Input download_ModulesRequest, String _token) throws java.rmi.RemoteException;
 }

@@ -342,7 +342,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 }
     }
 
-    public za.ac.uwc.www.Download_Department_Output download_Department(za.ac.uwc.www.Download_Department_Input download_DepartmentRequest) throws java.rmi.RemoteException {
+    public za.ac.uwc.www.Download_Department_Output download_Department(Download_Department_Input download_DepartmentRequest, String _token) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -376,7 +376,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 }
     }
 
-    public za.ac.uwc.www.Download_CalendarGroup_Output download_CalendarGroup(za.ac.uwc.www.Download_CalendarGroup_Input download_CalendarGroupRequest) throws java.rmi.RemoteException {
+    public za.ac.uwc.www.Download_CalendarGroup_Output download_CalendarGroup(Download_CalendarGroup_Input download_CalendarGroupRequest, String _token) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -410,7 +410,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 }
     }
 
-    public za.ac.uwc.www.Download_Students_Output download_Students(za.ac.uwc.www.Download_Students_Input download_StudentsRequest) throws java.rmi.RemoteException {
+    public za.ac.uwc.www.Download_Students_Output download_Students(Download_Students_Input download_StudentsRequest, String _token) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -444,7 +444,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 }
     }
 
-    public za.ac.uwc.www.Download_CourseChanges_Output download_CourseChanges(za.ac.uwc.www.Download_CourseChanges_Input download_CourseChangesRequest) throws java.rmi.RemoteException {
+    public za.ac.uwc.www.Download_CourseChanges_Output download_CourseChanges(Download_CourseChanges_Input download_CourseChangesRequest, String _token) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -478,7 +478,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 }
     }
 
-    public za.ac.uwc.www.Download_Modules_Output download_Modules(za.ac.uwc.www.Download_Modules_Input download_ModulesRequest) throws java.rmi.RemoteException {
+    public za.ac.uwc.www.Download_Modules_Output download_Modules(Download_Modules_Input download_ModulesRequest, String _token) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }

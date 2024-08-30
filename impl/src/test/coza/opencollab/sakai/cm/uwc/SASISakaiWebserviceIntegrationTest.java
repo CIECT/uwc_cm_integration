@@ -28,11 +28,13 @@ public class SASISakaiWebserviceIntegrationTest {
 
     private static boolean writeToFile = false;
 
+    private static String _token = "testToken";
+
     public static void main(String[] args) {
         Calendar cal = Calendar.getInstance();
         int currentYear = cal.get(Calendar.YEAR);
         SakaiSoapProxy proxy = new SakaiSoapProxy(
-                "http://196.11.235.60/applctns_sakai_WS/sakai.asmx", "testToken");
+                "http://196.11.235.60/applctns_sakai_WS/sakai.asmx", _token);
         //Academic Sessions
         getSASIAcademicSessions(proxy, currentYear);
         //Faculties
@@ -57,7 +59,7 @@ public class SASISakaiWebserviceIntegrationTest {
         try {
             for (String deptCode : deptCodeList) {
                 moduleInput.setDepartment_code(deptCode);
-                moduleOutput = proxy.getSakaiSoap().download_Modules(moduleInput);
+                moduleOutput = proxy.getSakaiSoap().download_Modules(moduleInput,_token);
                 String[][] moduleArray = moduleOutput.getModule_List();
                 for (int i = 0; i < moduleArray.length; i++) {
                     //                for (int i = 0; i < 5; i++) {
@@ -113,7 +115,7 @@ public class SASISakaiWebserviceIntegrationTest {
                 classListInput.setYear(BigInteger.valueOf(currentYear));
                 classListInput.setModule_code(moduleCode);
                 try {
-                    classListOutput = proxy.getSakaiSoap().download_Students(classListInput);
+                    classListOutput = proxy.getSakaiSoap().download_Students(classListInput, _token);
                     String[][] studentArray = classListOutput.getStudent_List();
                     for (int i = 0; i < studentArray.length; i++) {
                         for (int j = 0; j < studentArray[i].length; j++) {
@@ -178,7 +180,7 @@ public class SASISakaiWebserviceIntegrationTest {
                 System.out.println("*****  Department: " + deptCode);
                 moduleInput.setDepartment_code(deptCode);
                 try {
-                    moduleOutput = proxy.getSakaiSoap().download_Modules(moduleInput);
+                    moduleOutput = proxy.getSakaiSoap().download_Modules(moduleInput, _token);
                     String[][] moduleArray = moduleOutput.getModule_List();
                     for (int i = 0; i < moduleArray.length; i++) {
                         //                for (int i = 0; i < 5; i++) {
@@ -240,7 +242,7 @@ public class SASISakaiWebserviceIntegrationTest {
                 //        departmentInput.setDepartment("*");
                 departmentInput.setFaculty(facultyCode);
                 try {
-                    departmentOutput = proxy.getSakaiSoap().download_Department(departmentInput);
+                    departmentOutput = proxy.getSakaiSoap().download_Department(departmentInput, "token");
                     String[][] departmentArray = departmentOutput.getDepartment_List();
                     for (int i = 0; i < departmentArray.length; i++) {
                         //                for (int i = 0; i < 5; i++) {
@@ -351,7 +353,7 @@ public class SASISakaiWebserviceIntegrationTest {
                 out = new FileOutputStream("AcademicSession2.txt");
                 p = new PrintStream(out);
             }
-            calendarOutput = proxy.getSakaiSoap().download_CalendarGroup(academicInput);
+            calendarOutput = proxy.getSakaiSoap().download_CalendarGroup(academicInput, _token);
             String[][] academicCalendarArray = calendarOutput.getCalendar_Group_List();
             for (int i = 0; i < academicCalendarArray.length; i++) {
                 //            for (int i = 0; i < 5; i++) {

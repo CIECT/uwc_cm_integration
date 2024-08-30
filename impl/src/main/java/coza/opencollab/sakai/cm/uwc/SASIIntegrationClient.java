@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import com.microsoft.aad.msal4j.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
@@ -36,7 +35,6 @@ import za.ac.uwc.www.Download_Modules_Output;
 import za.ac.uwc.www.Download_Students_Input;
 import za.ac.uwc.www.Download_Students_Output;
 import za.ac.uwc.www.SakaiSoapProxy;
-import za.ac.uwc_academia.www.RequestPortProxy;
 
 public class SASIIntegrationClient implements SISClient {
 	public static final String CONFIG_YEAR = "uwc.coursemanagement.year";
@@ -315,7 +313,7 @@ public class SASIIntegrationClient implements SISClient {
 		SISAcademicSession academicSession = null;
 		try {
 			calendarOutput = proxy.getSakaiSoap().download_CalendarGroup(
-					academicInput);
+					academicInput, _token);
 			String[][] academicCalendarArray = calendarOutput
 					.getCalendar_Group_List();
 			for (int i = 0; i < academicCalendarArray.length; i++) {
@@ -351,7 +349,7 @@ public class SASIIntegrationClient implements SISClient {
 			allout: for (String deptCode : deptCodeList) {
 				moduleInput.setDepartment_code(deptCode);
 				moduleOutput = proxy.getSakaiSoap().download_Modules(
-						moduleInput);
+						moduleInput, _token);
 				String[][] moduleArray = moduleOutput.getModule_List();
 				for (int i = 0; i < moduleArray.length; i++) {
 					if(limitModules && modules.size() > moduleLimit) break allout;
@@ -420,7 +418,7 @@ public class SASIIntegrationClient implements SISClient {
 			departmentInput.setFaculty(facultyCode);
 			try {
 				Download_Department_Output departmentOutput = proxy
-						.getSakaiSoap().download_Department(departmentInput);
+						.getSakaiSoap().download_Department(departmentInput, _token);
 				String[][] departmentArray = departmentOutput
 						.getDepartment_List();
 				for (int i = 0; i < departmentArray.length; i++) {
@@ -461,7 +459,7 @@ public class SASIIntegrationClient implements SISClient {
 		classListInput.setModule_code(module.getModuleCode());
 		try {
 			classListOutput = proxy.getSakaiSoap().download_Students(
-					classListInput);
+					classListInput, _token);
 			String[][] studentArray = classListOutput.getStudent_List();
 			for (int i = 0; i < studentArray.length; i++) {
 				if(studentArray[i].length < 1){
@@ -485,7 +483,7 @@ public class SASIIntegrationClient implements SISClient {
 		SISCourseChange courseChange = null;
 		try {
 			courseChangeOutput = proxy.getSakaiSoap().download_CourseChanges(
-					courseChangeInput);
+					courseChangeInput, _token);
 			String[][] courseChangeArray = courseChangeOutput
 					.getCourse_Changes_List();
 			for (int i = 0; i < courseChangeArray.length; i++) {

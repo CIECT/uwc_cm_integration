@@ -4,11 +4,8 @@ import com.microsoft.aad.msal4j.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
 
 import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   private String _endpoint = null;
@@ -91,9 +88,10 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
       System.out.println("accessToken = " + _token);
       return _token;
     });
+
     System.out.println(_token);
   }
-  
+
   public void setEndpoint(String endpoint) {
     _endpoint = endpoint;
     if (sakaiSoap != null)
@@ -107,40 +105,40 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
     return sakaiSoap;
   }
   
-  public za.ac.uwc.www.Download_Faculty_Output download_Faculty(Download_Faculty_Input download_FacultyRequest, String s) throws java.rmi.RemoteException{
+  public za.ac.uwc.www.Download_Faculty_Output download_Faculty(Download_Faculty_Input download_FacultyRequest, String _token) throws java.rmi.RemoteException{
     if (sakaiSoap == null)
       _initSakaiSoapProxy();
     return sakaiSoap.download_Faculty(download_FacultyRequest, _token);
   }
   
-  public za.ac.uwc.www.Download_Department_Output download_Department(za.ac.uwc.www.Download_Department_Input download_DepartmentRequest) throws java.rmi.RemoteException{
+  public za.ac.uwc.www.Download_Department_Output download_Department(Download_Department_Input download_DepartmentRequest, String _token) throws java.rmi.RemoteException{
     if (sakaiSoap == null)
       _initSakaiSoapProxy();
-    return sakaiSoap.download_Department(download_DepartmentRequest);
+    return sakaiSoap.download_Department(download_DepartmentRequest, _token);
   }
   
-  public za.ac.uwc.www.Download_CalendarGroup_Output download_CalendarGroup(za.ac.uwc.www.Download_CalendarGroup_Input download_CalendarGroupRequest) throws java.rmi.RemoteException{
+  public za.ac.uwc.www.Download_CalendarGroup_Output download_CalendarGroup(Download_CalendarGroup_Input download_CalendarGroupRequest, String _token) throws java.rmi.RemoteException{
     if (sakaiSoap == null)
       _initSakaiSoapProxy();
-    return sakaiSoap.download_CalendarGroup(download_CalendarGroupRequest);
+    return sakaiSoap.download_CalendarGroup(download_CalendarGroupRequest, _token);
   }
   
-  public za.ac.uwc.www.Download_Students_Output download_Students(za.ac.uwc.www.Download_Students_Input download_StudentsRequest) throws java.rmi.RemoteException{
+  public za.ac.uwc.www.Download_Students_Output download_Students(Download_Students_Input download_StudentsRequest, String _token) throws java.rmi.RemoteException{
     if (sakaiSoap == null)
       _initSakaiSoapProxy();
-    return sakaiSoap.download_Students(download_StudentsRequest);
+    return sakaiSoap.download_Students(download_StudentsRequest, _token);
   }
   
-  public za.ac.uwc.www.Download_CourseChanges_Output download_CourseChanges(za.ac.uwc.www.Download_CourseChanges_Input download_CourseChangesRequest) throws java.rmi.RemoteException{
+  public za.ac.uwc.www.Download_CourseChanges_Output download_CourseChanges(za.ac.uwc.www.Download_CourseChanges_Input download_CourseChangesRequest, String _token) throws java.rmi.RemoteException{
     if (sakaiSoap == null)
       _initSakaiSoapProxy();
-    return sakaiSoap.download_CourseChanges(download_CourseChangesRequest);
+    return sakaiSoap.download_CourseChanges(download_CourseChangesRequest, _token);
   }
   
-  public za.ac.uwc.www.Download_Modules_Output download_Modules(za.ac.uwc.www.Download_Modules_Input download_ModulesRequest) throws java.rmi.RemoteException{
+  public za.ac.uwc.www.Download_Modules_Output download_Modules(za.ac.uwc.www.Download_Modules_Input download_ModulesRequest, String _token) throws java.rmi.RemoteException{
     if (sakaiSoap == null)
       _initSakaiSoapProxy();
-    return sakaiSoap.download_Modules(download_ModulesRequest);
+    return sakaiSoap.download_Modules(download_ModulesRequest, _token);
   }
   
   

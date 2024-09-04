@@ -2,10 +2,15 @@ package coza.opencollab.sakai.cm.uwc;
 
 import java.math.BigInteger;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.http.HttpClient;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
+import com.azure.core.credential.TokenRequestContext;
+import com.azure.identity.ClientSecretCredential;
+import com.azure.identity.ClientSecretCredentialBuilder;
 import com.microsoft.aad.msal4j.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
 
@@ -35,6 +40,9 @@ import za.ac.uwc.www.Download_Modules_Output;
 import za.ac.uwc.www.Download_Students_Input;
 import za.ac.uwc.www.Download_Students_Output;
 import za.ac.uwc.www.SakaiSoapProxy;
+
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class SASIIntegrationClient implements SISClient {
 	public static final String CONFIG_YEAR = "uwc.coursemanagement.year";
@@ -71,27 +79,58 @@ public class SASIIntegrationClient implements SISClient {
 		PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
 		AUTHORITY = serverConfigurationService.getString(AUTHORITY);
 		CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
-		IClientCredential credential = ClientCredentialFactory.createFromSecret(CLIENT_SECRET);
-		ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
-		Set<String> scopes = Set.of("api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use");
-		System.out.println("#####" + scopes.getClass().getName());
-		//ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
-		CompletableFuture<IAuthenticationResult> future = app.acquireToken(ClientCredentialParameters.builder(scopes).build());
-		future.handle((authenticationResult, throwable) -> {
-			if( throwable != null ) {
-				System.out.println("throwable = " + throwable);
-				return null;
-			}
+		String tenantId = "96045815-b7cb-417b-9783-34cc6f627fcd"; //to be made into a property
+		String[] scopes = new String[] { "api://89d09f31-1046-4baf-8217-5edc20c69b6c/.default" }; // Scope required for
+		// accessing specific
+		// API
 
-			_token = authenticationResult.accessToken();
-			System.out.println("accessToken = " + _token);
-			return _token;
-		});
+		ClientSecretCredential credential = new ClientSecretCredentialBuilder()
+				.clientId(PUBLIC_CLIENT_ID)
+				.clientSecret(CLIENT_SECRET)
+				.tenantId(tenantId)
+				.build();
+
+		TokenRequestContext requestContext = new TokenRequestContext().addScopes(scopes);
+
+		_token = credential.getToken(requestContext).block().getToken();
 		System.out.println(_token);
-		// Set up the SOAP proxy with the access token in the header
+
+		HttpClient httpClient = HttpClient.newBuilder()
+				.version(HttpClient.Version.HTTP_1_1)
+				.build();
+
+		String url = "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O";
+
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(url))
+				.header("Authorization", "Bearer " + _token)
+				.GET()
+				.build();
+
+		CompletableFuture<HttpResponse<String>> responseFuture = httpClient.sendAsync(request,
+				HttpResponse.BodyHandlers.ofString());
+
+		// Handle the response asynchronously
+		responseFuture.thenAccept(response -> {
+			int statusCode = response.statusCode();
+			String responseBody = response.body();
+			System.out.println("Response Status Code: " + statusCode);
+			System.out.println("Response Body: ");
+			System.out.println(responseBody);
+		}).join();
+		// var client = new HttpClient();
+		// var request = new HttpRequestMessage(HttpMethod.Post,
+		// "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O");
+		// request.Headers.Add("Authorization", "Bearer " + accessToken.ToString());
+		// request.Body = {};
+		// var response = client.SendAsync(request);
+		// response.EnsureSuccessStatusCode();
+		// Console.WriteLine(response.Content.ReadAsStringAsync());
+
+		// return accessToken;
+
+		// Set up the SOAP proxy with the access token being sent for the header
 		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, " https://az-jhb-uwc-apim-int-test-01.azure-api.net/sakai_api/v1/"), _token));
-		//sakaiSoapProxy = new SakaiSoapProxy(sakaiUrl);
-		//sakaiSoapProxy.addHeader("Authorization", "Bearer " + result.accessToken());
 
 		// Check for module limit configuration (existing code)
 		int moduleLimit = serverConfigurationService.getInt(CONFIG_MODULE_LIMIT, 0);

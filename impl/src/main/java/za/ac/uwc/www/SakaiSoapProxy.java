@@ -74,7 +74,7 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
 
     IClientCredential credential = ClientCredentialFactory.createFromSecret(CLIENT_SECRET);
     ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
-    Set<String> scopes = Set.of("api://a84227f1-0376-4f21-914a-82aff9fde5a5/ApiServices.Use");
+    Set<String> scopes = Set.of("api://89d09f31-1046-4baf-8217-5edc20c69b6c/Api.Contribute");
     System.out.println("#####" + scopes.getClass().getName());
    // ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
     CompletableFuture<IAuthenticationResult> future = app.acquireToken(ClientCredentialParameters.builder(scopes).build());

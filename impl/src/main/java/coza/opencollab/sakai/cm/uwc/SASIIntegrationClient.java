@@ -1,18 +1,16 @@
 package coza.opencollab.sakai.cm.uwc;
 
 import java.math.BigInteger;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.http.HttpClient;
 import java.rmi.RemoteException;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import com.azure.core.credential.TokenRequestContext;
-import com.azure.core.http.netty.NettyAsyncHttpClientBuilder;
-import com.azure.identity.ClientSecretCredential;
-import com.azure.identity.ClientSecretCredentialBuilder;
-import com.microsoft.aad.msal4j.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
 
 import coza.opencollab.sakai.cm.SISAcademicSession;
@@ -41,10 +39,16 @@ import za.ac.uwc.www.Download_Modules_Output;
 import za.ac.uwc.www.Download_Students_Input;
 import za.ac.uwc.www.Download_Students_Output;
 import za.ac.uwc.www.SakaiSoapProxy;
+import za.ac.uwc_academia.www.RequestPortProxy;
+
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
+import java.util.concurrent.CompletableFuture;
+import com.azure.core.credential.TokenRequestContext;
+import com.azure.identity.ClientSecretCredential;
+import com.azure.identity.ClientSecretCredentialBuilder;
 
 public class SASIIntegrationClient implements SISClient {
 	public static final String CONFIG_YEAR = "uwc.coursemanagement.year";
@@ -67,9 +71,6 @@ public class SASIIntegrationClient implements SISClient {
 	private boolean limitModules = false;
 	private int moduleLimit;
 
-	private String clientId = "";
-	private IClientCredential credential = null;
-	private Set<String> scope; // Replace with the appropriate scope for your API
 	private String sakaiUrl = "";
 	private SakaiSoapProxy sakaiSoapProxy;
 	private String _token;
@@ -78,7 +79,7 @@ public class SASIIntegrationClient implements SISClient {
 		this.proxy = proxy;
 	}
 
-	public void init() throws MalformedURLException {
+	public void init() {
 		PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
 		AUTHORITY = serverConfigurationService.getString(AUTHORITY);
 		CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
@@ -99,7 +100,9 @@ public class SASIIntegrationClient implements SISClient {
 		_token = credential.getToken(requestContext).block().getToken();
 		System.out.println(_token);
 
-		HttpClient httpClient = (HttpClient) new NettyAsyncHttpClientBuilder().build();
+		HttpClient httpClient = HttpClient.newBuilder()
+				.version(HttpClient.Version.HTTP_1_1)
+				.build();
 
 		String url = "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O";
 
@@ -121,17 +124,8 @@ public class SASIIntegrationClient implements SISClient {
 			System.out.println("Response Body: ");
 			System.out.println(responseBody);
 		}).join();
-		// var client = new HttpClient();
-		// var request = new HttpRequestMessage(HttpMethod.Post,
-		// "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O");
-		// request.Headers.Add("Authorization", "Bearer " + accessToken.ToString());
-		// request.Body = {};
-		// var response = client.SendAsync(request);
-		// response.EnsureSuccessStatusCode();
-		// Console.WriteLine(response.Content.ReadAsStringAsync());
 
 		// return accessToken;
-		System.out.println("9");
 		// Set up the SOAP proxy with the access token being sent for the header
 		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, " https://az-jhb-uwc-apim-int-test-01.azure-api.net/sakai_api/v1/"), _token));
 

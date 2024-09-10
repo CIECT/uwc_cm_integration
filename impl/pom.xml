@@ -36,12 +36,6 @@
 			<artifactId>sakai-kernel-api</artifactId>
 			<version>${sakai.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.sakaiproject.kernel</groupId>
-            <artifactId>sakai-kernel-private</artifactId>
-			<version>22.5</version>
-			<scope>provided</scope>
-        </dependency>
 		<dependency>
 			<groupId>org.sakaiproject.sitemanage</groupId>
 			<artifactId>sakai-site-manage-api</artifactId>
@@ -166,14 +160,9 @@
 			<version>1.13.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.microsoft.azure</groupId>
-			<artifactId>msal4j</artifactId>
-			<version>1.16.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.microsoft.aad</groupId>
-			<artifactId>adal4j</artifactId>
-			<version>0.0.2</version>
+			<groupId>com.azure</groupId>
+			<artifactId>azure-core</artifactId>
+			<version>1.49.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -183,17 +172,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.azure</groupId>
-			<artifactId>azure-core-http-netty</artifactId>
-			<version>1.15.3</version>
-		</dependency>
-	<!--	<dependency>
-		<groupId>io.netty</groupId>
-		<artifactId>netty-all</artifactId>
-		<version>4.1.77.Final</version>
-	</dependency>
- -->
 	</dependencies>
 
 	<build>

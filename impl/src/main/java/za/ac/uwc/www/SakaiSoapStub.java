@@ -320,7 +320,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Faculty"));
-        authHeader.setAttribute("Authorization", "Bearer " + token);;
+        authHeader.setAttribute("Authorization", "Bearer " + token);
         _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         setRequestHeaders(_call);
         setAttachments(_call);
@@ -354,6 +354,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        authHeader.setAttribute("Authorization", "Bearer " + _token);
+        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Department"));
 
         setRequestHeaders(_call);
@@ -388,6 +390,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        authHeader.setAttribute("Authorization", "Bearer " + _token);
+        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_CalendarGroup"));
 
         setRequestHeaders(_call);
@@ -422,6 +426,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        authHeader.setAttribute("Authorization", "Bearer " + _token);
+        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Students"));
 
         setRequestHeaders(_call);
@@ -456,6 +462,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        authHeader.setAttribute("Authorization", "Bearer " + _token);
+        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_CourseChanges"));
 
         setRequestHeaders(_call);
@@ -490,6 +498,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        authHeader.setAttribute("Authorization", "Bearer " + _token);
+        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Modules"));
 
         setRequestHeaders(_call);

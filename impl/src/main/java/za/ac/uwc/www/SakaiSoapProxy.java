@@ -1,9 +1,15 @@
 package za.ac.uwc.www;
 
+import com.azure.core.credential.TokenRequestContext;
+import com.azure.identity.ClientSecretCredential;
+import com.azure.identity.ClientSecretCredentialBuilder;
 import com.microsoft.aad.msal4j.*;
 import org.sakaiproject.component.api.ServerConfigurationService;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -12,16 +18,14 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   private String _token = null;
   private za.ac.uwc.www.SakaiSoap sakaiSoap = null;
 
-  private String clientId = "";
-  private IClientCredential credential = null;
-  private Set<String> scope; // Replace with the appropriate scope for your API
-  private String sakaiUrl = "";
-  private SakaiSoapProxy sakaiSoapProxy;
-  private IAuthenticationResult _Authtoken;
-
+  public String SASI_WEBSERVICE_URL = "uwc.cm.sasi.webservice.url";
   public String PUBLIC_CLIENT_ID =  "uwc.cm.sasi.webservice.PUBLIC_CLIENT_ID";
   public String AUTHORITY =  "uwc.cm.sasi.webservice.AUTHORITY";
+
+  public String TENANT_ID =  "uwc.cm.sasi.webservice.TENANT_ID";
   public String CLIENT_SECRET =  "uwc.cm.sasi.webservice.CLIENT_SECRET";
+
+  public String CLIENT_SCOPE =  "uwc.cm.sasi.webservice.CLIENT_SCOPE";
 
   private ServerConfigurationService serverConfigurationService;
   
@@ -71,23 +75,48 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
     PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
     AUTHORITY = serverConfigurationService.getString(AUTHORITY);
     CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
+    TENANT_ID = serverConfigurationService.getString(TENANT_ID);
+    CLIENT_SCOPE = serverConfigurationService.getString(CLIENT_SCOPE);
 
-    IClientCredential credential = ClientCredentialFactory.createFromSecret(CLIENT_SECRET);
-    ConfidentialClientApplication app = ConfidentialClientApplication.builder(PUBLIC_CLIENT_ID, credential).authority(AUTHORITY).build();
-    Set<String> scopes = Set.of("api://89d09f31-1046-4baf-8217-5edc20c69b6c/Api.Contribute");
-    System.out.println("#####" + scopes.getClass().getName());
-   // ClientCredentialParameters credentials = ClientCredentialParameters.builder(scopes).build();
-    CompletableFuture<IAuthenticationResult> future = app.acquireToken(ClientCredentialParameters.builder(scopes).build());
-    future.handle((authenticationResult, throwable) -> {
-      if( throwable != null ) {
-        System.out.println("throwable = " + throwable);
-        return null;
-      }
+    String[] scopes = new String[] { CLIENT_SCOPE }; // Scope required for
+    // accessing specific
+    // API
 
-      _token = authenticationResult.accessToken();
-      System.out.println("accessToken = " + _token);
-      return _token;
-    });
+    ClientSecretCredential credential = new ClientSecretCredentialBuilder()
+            .clientId(PUBLIC_CLIENT_ID)
+            .clientSecret(CLIENT_SECRET)
+            .tenantId(TENANT_ID)
+            .build();
+
+    TokenRequestContext requestContext = new TokenRequestContext().addScopes(scopes);
+
+    _token = credential.getToken(requestContext).block().getToken();
+    System.out.println(_token);
+
+    HttpClient httpClient = HttpClient.newBuilder()
+            .version(HttpClient.Version.HTTP_1_1)
+            .build();
+
+    String url = "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O";
+
+
+    java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
+            .uri(URI.create(url))
+            .header("Authorization", "Bearer " + _token)
+            .GET()
+            .build();
+
+    CompletableFuture<java.net.http.HttpResponse<String>> responseFuture = httpClient.sendAsync(request,
+            HttpResponse.BodyHandlers.ofString());
+
+    // Handle the response asynchronously
+    responseFuture.thenAccept(response -> {
+      int statusCode = response.statusCode();
+      String responseBody = response.body();
+      System.out.println("Response Status Code: " + statusCode);
+      System.out.println("Response Body: ");
+      System.out.println(responseBody);
+    }).join();
 
     System.out.println(_token);
   }

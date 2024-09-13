@@ -58,6 +58,7 @@ public class SASIIntegrationClient implements SISClient {
 	public String AUTHORITY =  "uwc.cm.sasi.webservice.AUTHORITY";
 	public String TENANT_ID =  "uwc.cm.sasi.webservice.TENANT_ID";
 	public String CLIENT_SECRET =  "uwc.cm.sasi.webservice.CLIENT_SECRET";
+	public String CLIENT_SCOPE =  "uwc.cm.sasi.webservice.CLIENT_SCOPE";
 	private ServerConfigurationService serverConfigurationService;
 	private SakaiSoapProxy proxy;
 	// all the current values
@@ -84,8 +85,9 @@ public class SASIIntegrationClient implements SISClient {
 		AUTHORITY = serverConfigurationService.getString(AUTHORITY);
 		CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
 		TENANT_ID = serverConfigurationService.getString(TENANT_ID);
+		CLIENT_SCOPE = serverConfigurationService.getString(CLIENT_SCOPE);
 
-		String[] scopes = new String[] { "api://89d09f31-1046-4baf-8217-5edc20c69b6c/.default" }; // Scope required for
+		String[] scopes = new String[] { CLIENT_SCOPE }; // Scope required for
 		// accessing specific
 		// API
 

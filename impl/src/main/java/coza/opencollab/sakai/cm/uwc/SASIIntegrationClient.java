@@ -1,16 +1,14 @@
 package coza.opencollab.sakai.cm.uwc;
 
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import com.microsoft.aad.msal4j.IAuthenticationResult;
+import com.microsoft.aad.msal4j.PublicClientApplication;
+import com.microsoft.aad.msal4j.SilentParameters;
+import coza.opencollab.sakai.cm.jobs.EnrollmentUpdateJob;
 import org.sakaiproject.component.api.ServerConfigurationService;
 
 import coza.opencollab.sakai.cm.SISAcademicSession;
@@ -26,6 +24,8 @@ import coza.opencollab.sakai.cm.SISSection;
 import coza.opencollab.sakai.cm.SISMembership;
 import coza.opencollab.sakai.cm.Utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import za.ac.uwc.www.Download_CalendarGroup_Input;
 import za.ac.uwc.www.Download_CalendarGroup_Output;
 import za.ac.uwc.www.Download_CourseChanges_Input;
@@ -80,6 +80,8 @@ public class SASIIntegrationClient implements SISClient {
 		this.proxy = proxy;
 	}
 
+	private static final Logger log = LoggerFactory.getLogger(EnrollmentUpdateJob.class);
+
 	public void init() {
 		PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
 		AUTHORITY = serverConfigurationService.getString(AUTHORITY);
@@ -87,20 +89,47 @@ public class SASIIntegrationClient implements SISClient {
 		TENANT_ID = serverConfigurationService.getString(TENANT_ID);
 		CLIENT_SCOPE = serverConfigurationService.getString(CLIENT_SCOPE);
 
+		log.info("Setting scope.");
 		String[] scopes = new String[] { CLIENT_SCOPE }; // Scope required for
 		// accessing specific
 		// API
-
+		log.info("Setting credentials.");
 		ClientSecretCredential credential = new ClientSecretCredentialBuilder()
 				.clientId(PUBLIC_CLIENT_ID)
 				.clientSecret(CLIENT_SECRET)
 				.tenantId(TENANT_ID)
 				.build();
-
+		log.info("TokenRequestContext...");
 		TokenRequestContext requestContext = new TokenRequestContext().addScopes(scopes);
 
-		_token = credential.getToken(requestContext).block().getToken();
-		System.out.println(_token);
+		log.info("credential.getToken...");
+
+
+		IAuthenticationResult result;
+		try {
+			PublicClientApplication application = PublicClientApplication
+					.builder("clientId")
+					.authority("authority")
+					.build();
+
+			SilentParameters parameters = SilentParameters
+					.builder(Collections.singleton("scope"))
+					.build();
+
+			result = application.acquireTokenSilently(parameters).join();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+
+
+		if (result != null)
+		{
+			_token = String.valueOf(result);
+		} else {
+			_token = credential.getToken(requestContext).block().getToken();
+		}
+		log.info("Token: " + _token);
+
 
 		HttpClient httpClient = HttpClient.newBuilder()
 				.version(HttpClient.Version.HTTP_1_1)

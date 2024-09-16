@@ -114,14 +114,14 @@ public class SASIIntegrationClient implements SISClient {
 
 			SilentParameters parameters = SilentParameters
 					.builder(Collections.singleton("scope"))
+					.tenant(TENANT_ID)
+					.authorityUrl(AUTHORITY)
 					.build();
 
 			result = application.acquireTokenSilently(parameters).join();
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
-
-
 		if (result != null)
 		{
 			_token = String.valueOf(result);

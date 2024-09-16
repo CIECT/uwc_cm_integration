@@ -78,7 +78,6 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   }
 
   public void setToken() throws MalformedURLException {
-
     PUBLIC_CLIENT_ID = serverConfigurationService.getString(PUBLIC_CLIENT_ID);
     AUTHORITY = serverConfigurationService.getString(AUTHORITY);
     CLIENT_SECRET = serverConfigurationService.getString(CLIENT_SECRET);
@@ -110,14 +109,14 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
 
       SilentParameters parameters = SilentParameters
               .builder(Collections.singleton("scope"))
+              .tenant(TENANT_ID)
+              .authorityUrl(AUTHORITY)
               .build();
 
       result = application.acquireTokenSilently(parameters).join();
     } catch (MalformedURLException e) {
       throw new RuntimeException(e);
     }
-
-
     if (result != null)
     {
       _token = String.valueOf(result);
@@ -134,7 +133,7 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
     String url = "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O";
 
 
-    java.net.http.HttpRequest request = HttpRequest.newBuilder()
+    HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))
             .header("Authorization", "Bearer " + _token)
             .GET()

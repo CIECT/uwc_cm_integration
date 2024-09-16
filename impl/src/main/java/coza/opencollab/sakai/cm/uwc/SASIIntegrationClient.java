@@ -108,12 +108,12 @@ public class SASIIntegrationClient implements SISClient {
 		IAuthenticationResult result;
 		try {
 			PublicClientApplication application = PublicClientApplication
-					.builder("clientId")
-					.authority("authority")
+					.builder(PUBLIC_CLIENT_ID)
+					.authority(AUTHORITY)
 					.build();
 
 			SilentParameters parameters = SilentParameters
-					.builder(Collections.singleton("scope"))
+					.builder(Collections.singleton(CLIENT_SCOPE))
 					.authorityUrl(AUTHORITY)
 					.build();
 

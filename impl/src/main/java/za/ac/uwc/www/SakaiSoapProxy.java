@@ -103,12 +103,12 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
     IAuthenticationResult result;
     try {
       PublicClientApplication application = PublicClientApplication
-              .builder("clientId")
-              .authority("authority")
+              .builder(PUBLIC_CLIENT_ID)
+              .authority(AUTHORITY)
               .build();
 
       SilentParameters parameters = SilentParameters
-              .builder(Collections.singleton("scope"))
+              .builder(Collections.singleton(CLIENT_SCOPE))
               .tenant(TENANT_ID)
               .authorityUrl(AUTHORITY)
               .build();

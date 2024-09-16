@@ -4,12 +4,17 @@ import com.azure.core.credential.TokenRequestContext;
 import com.azure.identity.ClientSecretCredential;
 import com.azure.identity.ClientSecretCredentialBuilder;
 import com.microsoft.aad.msal4j.*;
+import coza.opencollab.sakai.cm.jobs.EnrollmentUpdateJob;
 import org.sakaiproject.component.api.ServerConfigurationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,6 +31,8 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   public String CLIENT_SECRET =  "uwc.cm.sasi.webservice.CLIENT_SECRET";
 
   public String CLIENT_SCOPE =  "uwc.cm.sasi.webservice.CLIENT_SCOPE";
+
+  private static final Logger log = LoggerFactory.getLogger(EnrollmentUpdateJob.class);
 
   private ServerConfigurationService serverConfigurationService;
   
@@ -78,20 +85,47 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
     TENANT_ID = serverConfigurationService.getString(TENANT_ID);
     CLIENT_SCOPE = serverConfigurationService.getString(CLIENT_SCOPE);
 
+    log.info("Setting scope.");
     String[] scopes = new String[] { CLIENT_SCOPE }; // Scope required for
     // accessing specific
     // API
-
+    log.info("Setting credentials.");
     ClientSecretCredential credential = new ClientSecretCredentialBuilder()
             .clientId(PUBLIC_CLIENT_ID)
             .clientSecret(CLIENT_SECRET)
             .tenantId(TENANT_ID)
             .build();
-
+    log.info("TokenRequestContext...");
     TokenRequestContext requestContext = new TokenRequestContext().addScopes(scopes);
 
-    _token = credential.getToken(requestContext).block().getToken();
-    System.out.println(_token);
+    log.info("credential.getToken...");
+
+
+    IAuthenticationResult result;
+    try {
+      PublicClientApplication application = PublicClientApplication
+              .builder("clientId")
+              .authority("authority")
+              .build();
+
+      SilentParameters parameters = SilentParameters
+              .builder(Collections.singleton("scope"))
+              .build();
+
+      result = application.acquireTokenSilently(parameters).join();
+    } catch (MalformedURLException e) {
+      throw new RuntimeException(e);
+    }
+
+
+    if (result != null)
+    {
+      _token = String.valueOf(result);
+    } else {
+      _token = credential.getToken(requestContext).block().getToken();
+    }
+    log.info("Token: " + _token);
+
 
     HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_1_1)
@@ -100,13 +134,13 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
     String url = "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O";
 
 
-    java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
+    java.net.http.HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))
             .header("Authorization", "Bearer " + _token)
             .GET()
             .build();
 
-    CompletableFuture<java.net.http.HttpResponse<String>> responseFuture = httpClient.sendAsync(request,
+    CompletableFuture<HttpResponse<String>> responseFuture = httpClient.sendAsync(request,
             HttpResponse.BodyHandlers.ofString());
 
     // Handle the response asynchronously

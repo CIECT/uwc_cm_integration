@@ -114,7 +114,6 @@ public class SASIIntegrationClient implements SISClient {
 
 			SilentParameters parameters = SilentParameters
 					.builder(Collections.singleton("scope"))
-					.tenant(TENANT_ID)
 					.authorityUrl(AUTHORITY)
 					.build();
 

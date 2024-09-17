@@ -89,44 +89,24 @@ public class SASIIntegrationClient implements SISClient {
 		TENANT_ID = serverConfigurationService.getString(TENANT_ID);
 		CLIENT_SCOPE = serverConfigurationService.getString(CLIENT_SCOPE);
 
-		IAuthenticationResult result;
-		try {
-			PublicClientApplication application = PublicClientApplication
-					.builder(PUBLIC_CLIENT_ID)
-					.build();
-
-			SilentParameters parameters = SilentParameters
-					.builder(Collections.singleton(CLIENT_SCOPE))
-					.authorityUrl(AUTHORITY)
-					.build();
-
-			result = application.acquireTokenSilently(parameters).join();
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-		if (result != null || !(result.toString().equals("")))
-		{
-			_token = String.valueOf(result);
-		} else {
-
-			log.info("Setting scope.");
+		log.error("Setting scope.");
 			String[] scopes = new String[] { CLIENT_SCOPE }; // Scope required for
 			// accessing specific
 			// API
-			log.info("Setting credentials.");
+			log.error("Setting credentials.");
 			ClientSecretCredential credential = new ClientSecretCredentialBuilder()
 					.clientId(PUBLIC_CLIENT_ID)
 					.clientSecret(CLIENT_SECRET)
 					.tenantId(TENANT_ID)
 					.build();
-			log.info("TokenRequestContext...");
+			log.error("TokenRequestContext...");
 			TokenRequestContext requestContext = new TokenRequestContext().addScopes(scopes);
 
-			log.info("credential.getToken...");
+			log.error("credential.getToken...");
 
 			_token = credential.getToken(requestContext).block().getToken();
-		}
-		log.info("Token: " + _token);
+
+		log.error("###Token: " + _token);
 
 
 		HttpClient httpClient = HttpClient.newBuilder()

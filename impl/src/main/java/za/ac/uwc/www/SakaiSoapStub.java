@@ -312,7 +312,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         }
     }
 
-    public za.ac.uwc.www.Download_Faculty_Output download_Faculty(za.ac.uwc.www.Download_Faculty_Input download_FacultyRequest, String token) throws java.rmi.RemoteException {
+    public za.ac.uwc.www.Download_Faculty_Output download_Faculty(za.ac.uwc.www.Download_Faculty_Input download_FacultyRequest, String _token) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -325,8 +325,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Faculty"));
-        authHeader.setAttribute("Authorization", "Bearer " + token);
-        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
+        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
         setRequestHeaders(_call);
         setAttachments(_call);
  try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_FacultyRequest});
@@ -359,8 +358,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        authHeader.setAttribute("Authorization", "Bearer " + _token);
-        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
+        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Department"));
 
         setRequestHeaders(_call);
@@ -431,8 +429,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        authHeader.setAttribute("Authorization", "Bearer " + _token);
-        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
+        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Students"));
 
         setRequestHeaders(_call);
@@ -467,8 +464,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        authHeader.setAttribute("Authorization", "Bearer " + _token);
-        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
+        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_CourseChanges"));
 
         setRequestHeaders(_call);
@@ -503,8 +499,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        authHeader.setAttribute("Authorization", "Bearer " + _token);
-        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
+        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_Modules"));
 
         setRequestHeaders(_call);

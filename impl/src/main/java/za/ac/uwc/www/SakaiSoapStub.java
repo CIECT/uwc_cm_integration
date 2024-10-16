@@ -7,6 +7,10 @@
 
 package za.ac.uwc.www;
 
+import coza.opencollab.sakai.cm.jobs.EnrollmentUpdateJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.soap.SOAPHeaderElement;
 
 public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.uwc.www.SakaiSoap {
@@ -14,6 +18,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
     private java.util.Vector cachedDeserFactories = new java.util.Vector();
+
+    private static final Logger log = LoggerFactory.getLogger(EnrollmentUpdateJob.class);
 
     private SOAPHeaderElement authHeader = null;
 
@@ -382,6 +388,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
+        log.error("Download_CalendarGroup_Output: " + _token);
         org.apache.axis.client.Call _call = createCall();
         _call.setOperation(_operations[2]);
         _call.setUseSOAPAction(true);
@@ -390,7 +397,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        authHeader.setAttribute("Authorization", "Bearer " + _token);
+        authHeader.setAttribute("Authorization", );
         _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_CalendarGroup"));
 

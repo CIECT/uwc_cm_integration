@@ -108,33 +108,7 @@ public class SASIIntegrationClient implements SISClient {
 
 		log.error("###Token: " + _token);
 
-
-		HttpClient httpClient = HttpClient.newBuilder()
-				.version(HttpClient.Version.HTTP_1_1)
-				.build();
-
-		String url = "https://az-jhb-uwc-apim-int-test-01.azure-api.net/rest_api/v1/api/DocumentUpload/GetApplicantDocuments/23MO26180O";
-
-
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(url))
-				.header("Authorization", "Bearer " + _token)
-				.GET()
-				.build();
-
-		CompletableFuture<HttpResponse<String>> responseFuture = httpClient.sendAsync(request,
-				HttpResponse.BodyHandlers.ofString());
-
-		// Handle the response asynchronously
-		responseFuture.thenAccept(response -> {
-			int statusCode = response.statusCode();
-			String responseBody = response.body();
-			System.out.println("Response Status Code: " + statusCode);
-			System.out.println("Response Body: ");
-			System.out.println(responseBody);
-		}).join();
-
-		// return accessToken;
+			// return accessToken;
 		// Set up the SOAP proxy with the access token being sent for the header
 		setSakaiSoapProxy(new SakaiSoapProxy(serverConfigurationService.getString(SASI_WEBSERVICE_URL, " https://az-jhb-uwc-apim-int-test-01.azure-api.net/sakai_api/v1/"), _token));
 

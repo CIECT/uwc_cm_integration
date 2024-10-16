@@ -22,8 +22,6 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 
     private static final Logger log = LoggerFactory.getLogger(EnrollmentUpdateJob.class);
 
-    private SOAPHeaderElement authHeader = ;
-
     static org.apache.axis.description.OperationDesc [] _operations;
 
     static {

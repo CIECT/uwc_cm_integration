@@ -43,6 +43,7 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   public SakaiSoapProxy(String endpoint, String token) {
     _endpoint = endpoint;
     _token = token;
+    log.error("### in SakaiSoapProxy: " + _token);
     _initSakaiSoapProxy();
   }
 

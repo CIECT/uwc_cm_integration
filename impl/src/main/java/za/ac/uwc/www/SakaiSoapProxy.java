@@ -111,43 +111,43 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   }
   
   public za.ac.uwc.www.SakaiSoap getSakaiSoap() {
-    if (sakaiSoap == null)
+    if (sakaiSoap == null || _token == null)
       _initSakaiSoapProxy();
     return sakaiSoap;
   }
   
   public za.ac.uwc.www.Download_Faculty_Output download_Faculty(Download_Faculty_Input download_FacultyRequest, String _token) throws java.rmi.RemoteException{
-    if (sakaiSoap == null)
+    if (sakaiSoap == null || _token == null)
       _initSakaiSoapProxy();
     return sakaiSoap.download_Faculty(download_FacultyRequest, _token);
   }
   
   public za.ac.uwc.www.Download_Department_Output download_Department(Download_Department_Input download_DepartmentRequest, String _token) throws java.rmi.RemoteException{
-    if (sakaiSoap == null)
+    if (sakaiSoap == null || _token == null)
       _initSakaiSoapProxy();
     return sakaiSoap.download_Department(download_DepartmentRequest, _token);
   }
   
   public za.ac.uwc.www.Download_CalendarGroup_Output download_CalendarGroup(Download_CalendarGroup_Input download_CalendarGroupRequest, String _token) throws java.rmi.RemoteException{
-    if (sakaiSoap == null)
+    if (sakaiSoap == null || _token == null)
       _initSakaiSoapProxy();
     return sakaiSoap.download_CalendarGroup(download_CalendarGroupRequest, _token);
   }
   
   public za.ac.uwc.www.Download_Students_Output download_Students(Download_Students_Input download_StudentsRequest, String _token) throws java.rmi.RemoteException{
-    if (sakaiSoap == null)
+    if (sakaiSoap == null || _token == null)
       _initSakaiSoapProxy();
     return sakaiSoap.download_Students(download_StudentsRequest, _token);
   }
   
   public za.ac.uwc.www.Download_CourseChanges_Output download_CourseChanges(za.ac.uwc.www.Download_CourseChanges_Input download_CourseChangesRequest, String _token) throws java.rmi.RemoteException{
-    if (sakaiSoap == null)
+    if (sakaiSoap == null || _token == null)
       _initSakaiSoapProxy();
     return sakaiSoap.download_CourseChanges(download_CourseChangesRequest, _token);
   }
   
   public za.ac.uwc.www.Download_Modules_Output download_Modules(za.ac.uwc.www.Download_Modules_Input download_ModulesRequest, String _token) throws java.rmi.RemoteException{
-    if (sakaiSoap == null)
+    if (sakaiSoap == null || _token == null)
       _initSakaiSoapProxy();
     return sakaiSoap.download_Modules(download_ModulesRequest, _token);
   }

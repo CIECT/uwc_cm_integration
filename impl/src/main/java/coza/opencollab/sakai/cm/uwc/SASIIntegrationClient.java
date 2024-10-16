@@ -101,7 +101,7 @@ public class SASIIntegrationClient implements SISClient {
 					.build();
 			log.error("TokenRequestContext...");
 			TokenRequestContext requestContext = new TokenRequestContext().addScopes(scopes);
-
+			_token = credential.getToken(requestContext).block().getToken();
 			log.error("credential.getToken...");
 
 

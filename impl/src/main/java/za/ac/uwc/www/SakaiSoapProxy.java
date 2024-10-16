@@ -101,7 +101,7 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
 
     _token = credential.getToken(requestContext).block().getToken();
 
-    log.error("###Token: " + _token);
+    log.error("###Token Proxy.java -- : " + _token);
   }
 
   public void setEndpoint(String endpoint) {

@@ -74,7 +74,7 @@ public class SASIIntegrationClient implements SISClient {
 
 	private String sakaiUrl = "";
 	private SakaiSoapProxy sakaiSoapProxy;
-	private String _token;
+	private String _token = null;
 
 	public void setSakaiSoapProxy(SakaiSoapProxy proxy) {
 		this.proxy = proxy;
@@ -104,9 +104,7 @@ public class SASIIntegrationClient implements SISClient {
 
 			log.error("credential.getToken...");
 
-			_token = credential.getToken(requestContext).block().getToken();
 
-		log.error("###Token: " + _token);
 
 			// return accessToken;
 		// Set up the SOAP proxy with the access token being sent for the header
@@ -331,6 +329,7 @@ public class SASIIntegrationClient implements SISClient {
 		Download_CalendarGroup_Output calendarOutput = null;
 		SISAcademicSession academicSession = null;
 		try {
+			log.error("###Token 1: " + _token);
 			calendarOutput = proxy.getSakaiSoap().download_CalendarGroup(
 					academicInput, _token);
 			String[][] academicCalendarArray = calendarOutput
@@ -400,6 +399,7 @@ public class SASIIntegrationClient implements SISClient {
 	private List<Faculty> getFaculties() {
 		List<Faculty> facultyList = new ArrayList<Faculty>();
 		try {
+
 			Download_Faculty_Output facultyOutput = proxy.getSakaiSoap()
 					.download_Faculty(new Download_Faculty_Input(), _token);
 			String[][] facultyArray = facultyOutput.getFaculty_List();

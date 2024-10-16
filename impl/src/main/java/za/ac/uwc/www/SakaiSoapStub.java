@@ -22,7 +22,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 
     private static final Logger log = LoggerFactory.getLogger(EnrollmentUpdateJob.class);
 
-    private SOAPHeaderElement authHeader = null;
+    private SOAPHeaderElement authHeader = ;
 
     static org.apache.axis.description.OperationDesc [] _operations;
 
@@ -398,8 +398,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        authHeader.setAttribute("Authorization", "Bearer " + _token);
-        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
+        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_CalendarGroup"));
 
         setRequestHeaders(_call);

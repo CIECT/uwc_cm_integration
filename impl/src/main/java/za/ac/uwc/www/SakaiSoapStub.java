@@ -399,7 +399,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {   log.error("Call Headers: " + getHeaders());
+ try {   log.error("Call Headers: " + getHeaders().toString());
         java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_CalendarGroupRequest});
 
         if (_resp instanceof java.rmi.RemoteException) {

@@ -405,7 +405,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
      log.error("SOAP Action: " + _call.getSOAPActionURI());
 
         java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_CalendarGroupRequest});
-     log.error("Parameters: " + _call.getResponseMessage());
+
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
@@ -418,6 +418,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
+     log.error("Parameters: " + _call.getResponseMessage());
   throw axisFaultException;
 }
     }

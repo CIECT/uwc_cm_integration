@@ -399,7 +399,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_CalendarGroupRequest});
+ try {  log.error("Call: " + _call);
+        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_CalendarGroupRequest});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -504,7 +505,8 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_ModulesRequest});
+ try {
+     java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_ModulesRequest});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;

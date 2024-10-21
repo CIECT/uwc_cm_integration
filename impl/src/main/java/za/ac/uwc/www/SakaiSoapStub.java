@@ -385,39 +385,49 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
-        log.error("Download_CalendarGroup_Output: " + _token); // You might want to change this to log.info
-
+        log.error("Download_CalendarGroup_Output: " + _token);
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[2]); // Assuming _operations[2] is initialized correctly
+        _call.setOperation(_operations[2]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("http://www.uwc.ac.za/Download_CalendarGroup");
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
-        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Content-Type", "text/xml"));
+
+        SOAPHeaderElement authHeader = new org.apache.axis.message.SOAPHeaderElement("Authorization", "");
+        authHeader.setAttribute("Authorization", "Bearer " + _token);
+        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
+
+      //  _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
+        _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_CalendarGroup"));
+
         setRequestHeaders(_call);
         setAttachments(_call);
+ try {
 
-        String requestXML = _call.getMessageContext().getRequestMessage().getSOAPPartAsString();
-        log.error("#### - " + requestXML);
-        try {
-            java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_CalendarGroupRequest});
+     log.error("Calling operation: " + _call.getOperationName());
+     log.error("SOAP Action: " + _call.getSOAPActionURI());
 
-            if (_resp instanceof java.rmi.RemoteException) {
-                throw (java.rmi.RemoteException)_resp;
-            } else {
-                extractAttachments(_call);
-                try {
-                    return (za.ac.uwc.www.Download_CalendarGroup_Output) _resp;
-                } catch (java.lang.ClassCastException e) { // Handle specific conversion exception
-                    throw new RuntimeException("Error converting response to Download_CalendarGroup_Output", e);
-                }
-            }
-        } catch (org.apache.axis.AxisFault axisFaultException) {
-            throw axisFaultException;
+        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_CalendarGroupRequest});
+
+     log.error("Response: " + _resp.toString());
+
+        if (_resp instanceof java.rmi.RemoteException) {
+            throw (java.rmi.RemoteException)_resp;
         }
+        else {
+            extractAttachments(_call);
+            try {
+                return (za.ac.uwc.www.Download_CalendarGroup_Output) _resp;
+            } catch (java.lang.Exception _exception) {
+                return (za.ac.uwc.www.Download_CalendarGroup_Output) org.apache.axis.utils.JavaUtils.convert(_resp, za.ac.uwc.www.Download_CalendarGroup_Output.class);
+            }
+        }
+  } catch (org.apache.axis.AxisFault axisFaultException) {
+
+  throw axisFaultException;
+}
     }
 
     public za.ac.uwc.www.Download_Students_Output download_Students(Download_Students_Input download_StudentsRequest, String _token) throws java.rmi.RemoteException {

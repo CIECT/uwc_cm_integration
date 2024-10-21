@@ -43,6 +43,7 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
   public SakaiSoapProxy(String endpoint, String token) {
     _endpoint = endpoint;
     _token = token;
+    log.error("### in SakaiSoapProxy: " + _token);
     _initSakaiSoapProxy();
   }
 
@@ -85,15 +86,22 @@ public class SakaiSoapProxy implements za.ac.uwc.www.SakaiSoap {
 
     log.error("Setting scope.");
     String[] scopes = new String[] { CLIENT_SCOPE }; // Scope required for
-
+    // accessing specific
+    // API
+    log.error("Setting credentials.");
     ClientSecretCredential credential = new ClientSecretCredentialBuilder()
             .clientId(PUBLIC_CLIENT_ID)
             .clientSecret(CLIENT_SECRET)
             .tenantId(TENANT_ID)
             .build();
-
+    log.error("TokenRequestContext...");
     TokenRequestContext requestContext = new TokenRequestContext().addScopes(scopes);
+
+    log.error("credential.getToken...");
+
     _token = credential.getToken(requestContext).block().getToken();
+
+    log.error("###Token Proxy.java -- : " + _token);
   }
 
   public void setEndpoint(String endpoint) {

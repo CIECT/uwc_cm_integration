@@ -329,6 +329,7 @@ public class SASIIntegrationClient implements SISClient {
 		Download_CalendarGroup_Output calendarOutput = null;
 		SISAcademicSession academicSession = null;
 		try {
+			log.error("###Token 1: " + _token);
 			calendarOutput = proxy.getSakaiSoap().download_CalendarGroup(
 					academicInput, _token);
 			String[][] academicCalendarArray = calendarOutput

@@ -394,12 +394,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-
-        SOAPHeaderElement authHeader = new org.apache.axis.message.SOAPHeaderElement("Authorization", "");
-        authHeader.setAttribute("Authorization", "Bearer " + _token);
-        _call.addHeader((org.apache.axis.message.SOAPHeaderElement) authHeader);
-
-      //  _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
+        _call.addHeader(new org.apache.axis.message.SOAPHeaderElement("Authorization", "Bearer " + _token));
         _call.setOperationName(new javax.xml.namespace.QName("http://www.uwc.ac.za/", "Download_CalendarGroup"));
 
         setRequestHeaders(_call);
@@ -410,9 +405,7 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
      log.error("SOAP Action: " + _call.getSOAPActionURI());
 
         java.lang.Object _resp = _call.invoke(new java.lang.Object[] {download_CalendarGroupRequest});
-
-     log.error("Response: " + _resp.toString());
-
+     log.error("Parameters: " + _call.getResponseMessage());
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
@@ -425,7 +418,6 @@ public class SakaiSoapStub extends org.apache.axis.client.Stub implements za.ac.
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
-
   throw axisFaultException;
 }
     }

@@ -11,7 +11,6 @@ import org.sakaiproject.coursemanagement.api.AcademicSession;
 import org.sakaiproject.coursemanagement.api.CanonicalCourse;
 import org.sakaiproject.coursemanagement.api.CourseOffering;
 import org.sakaiproject.coursemanagement.api.CourseSet;
-import org.sakaiproject.coursemanagement.api.Enrollment;
 import org.sakaiproject.coursemanagement.api.EnrollmentSet;
 import org.sakaiproject.coursemanagement.api.Section;
 
@@ -20,10 +19,8 @@ import coza.opencollab.sakai.cm.SISCourseOffering;
 import coza.opencollab.sakai.cm.SISCourseSet;
 import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISEnrollmentSet;
-import coza.opencollab.sakai.cm.SISSection;
-import coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient;
-import coza.opencollab.sakai.cm.uwc.SASIIntegrationClient;
 import coza.opencollab.sakai.cm.SISMembership;
+import coza.opencollab.sakai.cm.SISSection;
 
 /**
  * This is a quartz job that will do a full population of Course Management

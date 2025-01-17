@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -19,15 +17,14 @@ import coza.opencollab.sakai.cm.SISCourseOffering;
 import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISMembership;
 import coza.opencollab.sakai.cm.SISSection;
-import coza.opencollab.sakai.cm.uwc.SASIIntegrationClient;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is a quartz job that will update Course sites with enrolled Student
  * data.
  */
+@Slf4j
 public class EnrollmentUpdateJob extends BaseCourseManagementJob implements Job {
-
-	private static final Logger log = LogManager.getLogger(EnrollmentUpdateJob.class);
 	
 	public void executeJob(JobExecutionContext jobExecutionContext)
 			throws JobExecutionException {

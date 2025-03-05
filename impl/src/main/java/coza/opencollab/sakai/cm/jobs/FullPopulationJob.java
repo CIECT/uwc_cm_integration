@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -21,16 +22,25 @@ import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISEnrollmentSet;
 import coza.opencollab.sakai.cm.SISMembership;
 import coza.opencollab.sakai.cm.SISSection;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is a quartz job that will do a full population of Course Management
  * data.
  */
+@Slf4j
 public class FullPopulationJob extends BaseCourseManagementJob implements Job {
 
 	public void executeJob(JobExecutionContext jobExecutionContext)
 			throws JobExecutionException {
-		createAcademicSessions();
+		
+//		String token = getClient().setOAuthToken();
+
+//		if(StringUtils.isEmpty(token)) {
+//			log.error("FullPopulationJob.executeJob token is null.");
+//		} else {
+			createAcademicSessions();
+//		}
 	}
 
 	private void createAcademicSessions() {

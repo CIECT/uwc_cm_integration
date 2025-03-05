@@ -22,10 +22,9 @@ import coza.opencollab.sakai.cm.SISCourseSet;
 import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISEnrollmentSet;
 import coza.opencollab.sakai.cm.SISException;
-import coza.opencollab.sakai.cm.SISSection;
 import coza.opencollab.sakai.cm.SISMembership;
+import coza.opencollab.sakai.cm.SISSection;
 import coza.opencollab.sakai.cm.Utils;
-
 import za.ac.uwc.www.Download_CalendarGroup_Input;
 import za.ac.uwc.www.Download_CalendarGroup_Output;
 import za.ac.uwc.www.Download_CourseChanges_Input;
@@ -39,7 +38,6 @@ import za.ac.uwc.www.Download_Modules_Output;
 import za.ac.uwc.www.Download_Students_Input;
 import za.ac.uwc.www.Download_Students_Output;
 import za.ac.uwc.www.SakaiSoapProxy;
-import za.ac.uwc_academia.www.RequestPortProxy;
 
 public class SASIIntegrationClient implements SISClient {
 	public static final String CONFIG_YEAR = "uwc.coursemanagement.year";
@@ -529,4 +527,10 @@ public class SASIIntegrationClient implements SISClient {
 		modules2.clear();
 		enrolledStudents.clear();	
 	}
+
+//	@Override
+//	public String setOAuthToken() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }

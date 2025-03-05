@@ -432,4 +432,10 @@ public class AcademiaIntegrationClient implements SISClient {
 		academicSessions.clear();
 		modules.clear();
 	}
+
+//	@Override
+//	public String setOAuthToken() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }

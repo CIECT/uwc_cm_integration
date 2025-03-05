@@ -13,6 +13,11 @@ public interface SISClient {
 	 */
 	public void destroy();
     
+//    /**
+//     * Set the OAuth Token
+//     */
+//    public String setOAuthToken();
+    
     /**
      * Retrieves the academic sessions
      */

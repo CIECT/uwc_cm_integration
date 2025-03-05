@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -30,13 +31,19 @@ public class EnrollmentUpdateJob extends BaseCourseManagementJob implements Job 
 			throws JobExecutionException {
 		log.info("EnrollmentUpdateJob.executeJob started.");
 		
-		Collection<SISAcademicSession> academicSessions = getClient()
-				.getAcademicSessions();
-        Collection<SISCourseChange> courseChanges = getClient()
-                .getCourseChanges();		
-        for (SISCourseChange courseChange : courseChanges) {
-            updateCourseChanges(academicSessions, courseChange);
-        }
+//		String token = getClient().setOAuthToken();
+//
+//		if(StringUtils.isEmpty(token)) {
+//			log.error("EnrollmentUpdateJob.executeJob token is null.");
+//		} else {			
+			Collection<SISAcademicSession> academicSessions = getClient()
+					.getAcademicSessions();
+	        Collection<SISCourseChange> courseChanges = getClient()
+	                .getCourseChanges();		
+	        for (SISCourseChange courseChange : courseChanges) {
+	            updateCourseChanges(academicSessions, courseChange);
+	        }
+//		}
 		log.info("EnrollmentUpdateJob.executeJob finished.");
 	}
 

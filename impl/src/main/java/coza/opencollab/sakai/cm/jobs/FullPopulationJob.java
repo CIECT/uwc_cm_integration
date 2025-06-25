@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -11,7 +12,6 @@ import org.sakaiproject.coursemanagement.api.AcademicSession;
 import org.sakaiproject.coursemanagement.api.CanonicalCourse;
 import org.sakaiproject.coursemanagement.api.CourseOffering;
 import org.sakaiproject.coursemanagement.api.CourseSet;
-import org.sakaiproject.coursemanagement.api.Enrollment;
 import org.sakaiproject.coursemanagement.api.EnrollmentSet;
 import org.sakaiproject.coursemanagement.api.Section;
 
@@ -20,20 +20,27 @@ import coza.opencollab.sakai.cm.SISCourseOffering;
 import coza.opencollab.sakai.cm.SISCourseSet;
 import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISEnrollmentSet;
-import coza.opencollab.sakai.cm.SISSection;
-import coza.opencollab.sakai.cm.uwc.AcademiaIntegrationClient;
-import coza.opencollab.sakai.cm.uwc.SASIIntegrationClient;
 import coza.opencollab.sakai.cm.SISMembership;
+import coza.opencollab.sakai.cm.SISSection;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is a quartz job that will do a full population of Course Management
  * data.
  */
+@Slf4j
 public class FullPopulationJob extends BaseCourseManagementJob implements Job {
 
 	public void executeJob(JobExecutionContext jobExecutionContext)
 			throws JobExecutionException {
-		createAcademicSessions();
+		
+//		String token = getClient().setOAuthToken();
+
+//		if(StringUtils.isEmpty(token)) {
+//			log.error("FullPopulationJob.executeJob token is null.");
+//		} else {
+			createAcademicSessions();
+//		}
 	}
 
 	private void createAcademicSessions() {

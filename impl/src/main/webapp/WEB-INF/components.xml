@@ -33,8 +33,10 @@
 			ref="org.sakaiproject.coursemanagement.api.CourseManagementService" />
 		<property name="authzGroupService"
 			ref="org.sakaiproject.authz.api.AuthzGroupService" />
+		<!--property name="client"
+			ref="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" / -->
 		<property name="client"
-			ref="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient" />
+			ref="coza.opencollab.sakai.cm.uwc.OAuthSASIIntegrationClient" />
 	</bean>
 
 	<!-- bean id="coza.opencollab.sakai.cm.test.TestClient" class="coza.opencollab.sakai.cm.test.TestClient">
@@ -42,7 +44,7 @@
 			value="C:\Development\Projects\Sakai\src\CM\sampleFiles\SimpleSections" />
 	</bean -->
 
-	<bean id="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient"
+	<!--bean id="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient"
 		class="coza.opencollab.sakai.cm.uwc.SASIIntegrationClient">
 		<property name="serverConfigurationService"
 			ref="org.sakaiproject.component.api.ServerConfigurationService" />
@@ -52,6 +54,12 @@
 					value="http://sasi.uwc.ac.za/applctns_sakai_WS/sakai.asmx" />				
 			</bean>
 		</property>
+	</bean -->
+
+	<bean id="coza.opencollab.sakai.cm.uwc.OAuthSASIIntegrationClient"
+		class="coza.opencollab.sakai.cm.uwc.OAuthSASIIntegrationClient">
+		<property name="serverConfigurationService"
+			ref="org.sakaiproject.component.api.ServerConfigurationService" />
 	</bean>
 
 	<bean
@@ -114,7 +122,7 @@
 	
 	
 	<!-- UWC Academia Course Population Job -->
-	<bean id="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob" class="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob">
+	<!--  bean id="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob" class="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob">
 		<property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager" />
 		<property name="securityService" ref="org.sakaiproject.authz.api.SecurityService" />
 		<property name="courseManagementAdmin"
@@ -139,6 +147,6 @@
 		<property name="beanId" value="coza.opencollab.sakai.cm.jobs.AcademiaCoursePopulationJob" />
 		<property name="jobName" value="UWC Academia Course Population Job" />
 		<property name="schedulerManager" ref="org.sakaiproject.api.app.scheduler.SchedulerManager" />
-	</bean>
+	</bean -->
 	
 </beans>

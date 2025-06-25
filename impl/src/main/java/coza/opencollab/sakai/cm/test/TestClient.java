@@ -262,4 +262,10 @@ public class TestClient implements SISClient {
 		return null;
 	}
 
+//	@Override
+//	public String setOAuthToken() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
 }

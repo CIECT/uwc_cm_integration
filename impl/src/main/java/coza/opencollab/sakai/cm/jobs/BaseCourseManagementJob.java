@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -35,17 +33,18 @@ import coza.opencollab.sakai.cm.SISCourseOffering;
 import coza.opencollab.sakai.cm.SISCourseSet;
 import coza.opencollab.sakai.cm.SISEnrollment;
 import coza.opencollab.sakai.cm.SISEnrollmentSet;
-import coza.opencollab.sakai.cm.SISSection;
 import coza.opencollab.sakai.cm.SISMembership;
+import coza.opencollab.sakai.cm.SISSection;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This base Course Management job. This class has the base code to run any
  * course management job.
  * 
  */
+@Slf4j
 public abstract class BaseCourseManagementJob implements Job {
 	private static final String ADMIN_USER = "admin";
-	private final Log log = LogFactory.getLog(getClass());
 	private SessionManager sessionManager;
 	private SecurityService securityService;
 	private CourseManagementService cmService;
